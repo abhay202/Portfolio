@@ -72,7 +72,7 @@ if (!sessionStorage.getItem('booted')) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   let W, H, columns, drops;
-  const chars = '01ABCDEF{}[]<>=/\\|;:,.アイウエオカキクケコ';
+  const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&*+-/%^~|<>={}[]();:,.?#@μΩλπΣΔ∞√⊕⊗';
   const fontSize = 14;
 
   function resize() {
@@ -978,7 +978,7 @@ function renderTTTBoard(gameId, board, statusText = "Your turn! Click a cell to 
 </div>`;
 }
 
-window.makeTTTMove = function(gameId, playerIdx, boardStr) {
+window.makeTTTMove = function (gameId, playerIdx, boardStr) {
   let board = boardStr.split('');
   board[playerIdx] = '1';
 
@@ -986,7 +986,7 @@ window.makeTTTMove = function(gameId, playerIdx, boardStr) {
     updateTTTUI(gameId, board, "🎉 Player '1' wins!");
     return;
   }
-  
+
   if (!board.includes(' ')) {
     updateTTTUI(gameId, board, "👔 It's a tie!");
     return;
@@ -996,7 +996,7 @@ window.makeTTTMove = function(gameId, playerIdx, boardStr) {
   if (emptyIndices.length > 0) {
     const cpuIdx = getBestTTTMove(board, '0', '1') ?? emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
     board[cpuIdx] = '0';
-    
+
     if (checkTTTWin(board, '0')) {
       updateTTTUI(gameId, board, "💻 Computer '0' wins!");
       return;
@@ -1011,7 +1011,7 @@ window.makeTTTMove = function(gameId, playerIdx, boardStr) {
   updateTTTUI(gameId, board, "Your turn! Click a cell to place '1'.");
 };
 
-window.checkTTTWin = function(board, char) {
+window.checkTTTWin = function (board, char) {
   const winLines = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8],
     [0, 3, 6], [1, 4, 7], [2, 5, 8],
@@ -1020,7 +1020,7 @@ window.checkTTTWin = function(board, char) {
   return winLines.some(line => line.every(idx => board[idx] === char));
 };
 
-window.getBestTTTMove = function(board, cpuChar, playerChar) {
+window.getBestTTTMove = function (board, cpuChar, playerChar) {
   const winLines = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8],
     [0, 3, 6], [1, 4, 7], [2, 5, 8],
@@ -1045,14 +1045,14 @@ window.getBestTTTMove = function(board, cpuChar, playerChar) {
   return null;
 };
 
-window.updateTTTUI = function(gameId, board, statusText) {
+window.updateTTTUI = function (gameId, board, statusText) {
   const gameEl = document.getElementById(`ttt-game-${gameId}`);
   if (gameEl) {
     gameEl.outerHTML = renderTTTBoard(gameId, board, statusText);
   }
 };
 
-window.resetTTT = function(gameId) {
+window.resetTTT = function (gameId) {
   updateTTTUI(gameId, Array(9).fill(' '), "Game restarted! Click a cell to place '1'.");
 };
 
@@ -1074,13 +1074,13 @@ function getShooterAudioCtx() {
   return shooterAudioCtx;
 }
 
-window.playShooterSound = function(type) {
+window.playShooterSound = function (type) {
   try {
     const ctx = getShooterAudioCtx();
     if (!ctx) return;
-    
+
     const now = ctx.currentTime;
-    
+
     if (type === 'laser') {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
@@ -1126,7 +1126,7 @@ window.playShooterSound = function(type) {
 };
 
 // Local storage high score persistence
-window.getShooterHighScore = function() {
+window.getShooterHighScore = function () {
   try {
     return parseInt(localStorage.getItem('bug_defender_highscore') || '0', 10);
   } catch (e) {
@@ -1134,16 +1134,16 @@ window.getShooterHighScore = function() {
   }
 };
 
-window.saveShooterHighScore = function(score) {
+window.saveShooterHighScore = function (score) {
   try {
     const currentHigh = getShooterHighScore();
     if (score > currentHigh) {
       localStorage.setItem('bug_defender_highscore', score.toString());
     }
-  } catch (e) {}
+  } catch (e) { }
 };
 
-window.renderShooterBoard = function(gameId) {
+window.renderShooterBoard = function (gameId) {
   return `
 <div class="ttt-container shooter-container" id="shooter-game-${gameId}" style="max-width: 270px; text-align: left;" tabindex="0">
   <style>
@@ -1210,7 +1210,7 @@ window.renderShooterBoard = function(gameId) {
 </div>`;
 };
 
-window.initShooterGame = function(gameId) {
+window.initShooterGame = function (gameId) {
   const canvas = document.getElementById(`shooter-canvas-${gameId}`);
   if (!canvas) return;
 
@@ -1251,7 +1251,7 @@ window.initShooterGame = function(gameId) {
     if (game.over) return;
     const rect = canvas.getBoundingClientRect();
     game.player.targetX = e.clientX - rect.left;
-    try { getShooterAudioCtx(); } catch (err) {}
+    try { getShooterAudioCtx(); } catch (err) { }
   });
 
   // Touch controls
@@ -1261,7 +1261,7 @@ window.initShooterGame = function(gameId) {
     const rect = canvas.getBoundingClientRect();
     const touch = e.touches[0];
     game.player.targetX = touch.clientX - rect.left;
-    try { getShooterAudioCtx(); } catch (err) {}
+    try { getShooterAudioCtx(); } catch (err) { }
   }, { passive: false });
 
   // Keyboard continuous controls
@@ -1275,7 +1275,7 @@ window.initShooterGame = function(gameId) {
         game.player.targetX = undefined; // Override mouse
         e.preventDefault();
         e.stopPropagation();
-        try { getShooterAudioCtx(); } catch (err) {}
+        try { getShooterAudioCtx(); } catch (err) { }
       }
     });
 
@@ -1408,7 +1408,7 @@ window.initShooterGame = function(gameId) {
     game.enemies.forEach((e, idx) => {
       e.y += e.vy;
       e.x += e.vx;
-      
+
       // Bounce bugs off side walls
       if (e.x <= 12 || e.x >= 228) {
         e.vx = -e.vx;
@@ -1419,10 +1419,10 @@ window.initShooterGame = function(gameId) {
         game.enemies.splice(idx, 1);
         game.lives--;
         playShooterSound('hit');
-        
+
         // Spawn error particles
         spawnParticles(e.x, 340, 12);
-        
+
         if (game.lives <= 0) {
           game.over = true;
           saveShooterHighScore(game.score);
@@ -1449,13 +1449,13 @@ window.initShooterGame = function(gameId) {
           // Collision!
           game.bullets.splice(bIdx, 1);
           e.hp--;
-          
+
           if (e.hp <= 0) {
             game.enemies.splice(eIdx, 1);
             game.score += 10;
             playShooterSound('hit');
             spawnParticles(e.x, e.y, 14);
-            
+
             // Level progression logic
             const nextLevel = Math.floor(game.score / 100) + 1;
             if (nextLevel > game.level) {
@@ -1506,10 +1506,10 @@ window.initShooterGame = function(gameId) {
       ctx.shadowColor = e.color;
       ctx.strokeStyle = e.color;
       ctx.lineWidth = 1.5;
-      
+
       // Draw rectangular warning chip
       ctx.strokeRect(e.x - 12, e.y - 7, 24, 14);
-      
+
       // Draw labeling text
       ctx.fillStyle = e.color;
       ctx.font = 'bold 8px var(--font-mono)';
@@ -1522,16 +1522,16 @@ window.initShooterGame = function(gameId) {
     ctx.save();
     ctx.shadowBlur = 8;
     ctx.shadowColor = '#4ec956';
-    
+
     // Outer border
     ctx.strokeStyle = '#4ec956';
     ctx.lineWidth = 2;
     ctx.strokeRect(game.player.x - 12, game.player.y - 6, 24, 12);
-    
+
     // Core silicon
     ctx.fillStyle = '#060a0f';
     ctx.fillRect(game.player.x - 11, game.player.y - 5, 22, 10);
-    
+
     // MCU pins
     ctx.fillStyle = '#56b6c2';
     for (let i = -10; i <= 10; i += 5) {
@@ -1552,7 +1552,7 @@ window.initShooterGame = function(gameId) {
     // Draw digital life indicator bars
     ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
     ctx.fillRect(174, 343, 60, 8); // Track
-    
+
     ctx.fillStyle = game.lives === 1 ? '#e06c75' : '#4ec956';
     ctx.fillRect(174, 343, game.lives * 20, 8); // Filled bars
 
@@ -1586,7 +1586,7 @@ window.initShooterGame = function(gameId) {
   loop();
 };
 
-window.resetShooter = function(gameId) {
+window.resetShooter = function (gameId) {
   const game = shooterGames[gameId];
   if (game) {
     if (game.frameId) cancelAnimationFrame(game.frameId);
