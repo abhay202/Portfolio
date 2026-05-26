@@ -36,11 +36,18 @@
             <nav id="top-nav">
                 <ul>
                     <li><a href="#" class="active" data-section="home">home</a></li>
-                    <li><a href="#" data-section="skills">skills</a></li>
-                    <li><a href="#" data-section="projects">projects</a></li>
                     <li><a href="#" data-section="experience">experience</a></li>
                     <li><a href="#" data-section="education">education</a></li>
+                    <li><a href="#" data-section="projects">projects</a></li>
+                    <li><a href="#" data-section="skills">skills</a></li>
                     <li class="right"><a href="#" data-section="contact">contact</a></li>
+                    <li class="right"><a href="#" data-section="help">help</a></li>
+                    <li class="right resume-nav-item">
+                        <a href="https://drive.google.com/file/d/14Yc5ow_jT51sJDCp-ozflP_HsjjLhGMV/view?usp=drive_link"
+                            target="_blank" rel="noopener" class="resume-btn">
+                            <span class="resume-icon">↓</span> resume
+                        </a>
+                    </li>
                 </ul>
             </nav>
 
@@ -51,17 +58,18 @@
             <div class="intro-container">
                 <div class="intro-left">
                     <p class="content">
-                        Hey, I'm <span class="highlight">Abhay Pratap Singh Sengar</span> — a Firmware
-                        & Embedded Systems Engineer with production experience
-                        at <span class="highlight">Nokia</span>.
+                        Hey, I'm <span class="highlight">Abhay Pratap Singh Sengar</span> a Firmware
+                        & Embedded Systems Engineer with the experience
+                        at <span class="highlight">Nokia</span> and <span class="highlight">Digineous
+                            Technologies</span>.
                         <br><br>
-                        I build reliable, low-level systems — from
-                        <span class="highlight">bare-metal firmware</span> on ARM Cortex-M
+                        I build <span class="highlight">reliable, low-level systems</span> from
+                        <span class="highlight">bare-metal firmware</span>
                         to <span class="highlight">RTOS-based architectures</span>,
                         <span class="highlight">IoT sensor networks</span>, and
                         <span class="highlight">embedded Linux</span>.
                         <br><br>
-                        M.S. Computer Engineering @ <span class="highlight">NC State</span>
+                        M.S. Computer Engineering @ <span class="highlight">North Carolina State University.</span>
                         <br>
                         Currently <span class="highlight status-dot">●</span> open to full-time roles.
                     </p>
@@ -72,6 +80,10 @@
                             rel="noopener">LinkedIn</a> |
                         <a href="https://github.com/abhay202" target="_blank" rel="noopener">GitHub</a> |
                         <a href="mailto:apsengar@ncsu.edu">Email</a>
+                    </div>
+
+                    <div class="dim" style="margin-top: 18px; font-size: 0.82rem; line-height: 1.5;">
+                        Click <span class="cyan" style="cursor: pointer; text-decoration: underline;" onclick="runCmd('help')">help</span> to get the list of commands for the interactive CLI, or use the navigation bar above.
                     </div>
                 </div>
 
@@ -89,13 +101,13 @@
                 <div class="cli-hint">
                     <span class="dim">Type a command below or click: </span>
                     <span class="cmd-shortcuts">
-                        <button class="shortcut" data-cmd="neofetch">neofetch</button>
-                        <button class="shortcut" data-cmd="whoami">whoami</button>
-                        <button class="shortcut" data-cmd="cat skills.txt">skills</button>
-                        <button class="shortcut" data-cmd="ls projects/">projects</button>
+                        <button class="shortcut" data-cmd="cat whoami.md">whoami</button>
                         <button class="shortcut" data-cmd="cat experience.md">experience</button>
                         <button class="shortcut" data-cmd="cat education.md">education</button>
-                        <button class="shortcut" data-cmd="cat contact.txt">contact</button>
+                        <button class="shortcut" data-cmd="ls projects/">projects</button>
+                        <button class="shortcut" data-cmd="cat skills.md">skills</button>
+                        <button class="shortcut" data-cmd="cat contact.md">contact</button>
+                        <button class="shortcut" data-cmd="play">play shooter</button>
                         <button class="shortcut" data-cmd="help">help</button>
                     </span>
                 </div>
@@ -113,11 +125,19 @@
                 </div>
             </div>
 
+            <!-- ── Contact Me Section ────────────────────── -->
+            <div id="contact-me-section" style="margin-top: 40px; margin-bottom: 40px; text-align: center; border-top: 1px solid var(--bg3); padding-top: 40px; animation: fadeIn 0.8s ease 0.6s both;">
+                <h2 style="font-size: 1.5rem; color: var(--bright-green); margin-bottom: 12px; font-weight: 700;">&gt; Get In Touch</h2>
+                <p class="dim" style="font-size: 0.9rem; margin-bottom: 24px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                    Have an interesting project, job opportunity, or just want to connect? My inbox is always open. Feel free to shoot me an email!
+                </p>
+                <a href="mailto:apsengar@ncsu.edu" class="resume-btn" style="display: inline-flex !important; align-items: center; justify-content: center; gap: 8px; padding: 12px 28px !important; margin: 0 auto; max-width: fit-content; text-transform: uppercase;">
+                    <span class="resume-icon">✉</span> Contact Me
+                </a>
+            </div>
+
             <!-- ── Footer ───────────────────────────────── -->
-            <pre class="footer"><code>
-source: <a class="alt" href="https://github.com/abhay202/Portfolio" target="_blank" rel="noopener">github.com/abhay202/Portfolio</a>
-© abhay sengar <script>document.write(new Date().getFullYear())</script>
-            </code></pre>
+            <pre class="footer"><code>© <script>document.write(new Date().getFullYear())</script> Abhay Pratap Singh Sengar. All Rights Reserved.</code></pre>
 
         </div>
     </div>

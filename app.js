@@ -215,12 +215,13 @@ document.querySelectorAll('#top-nav a[data-section]').forEach(link => {
     e.preventDefault();
     const section = link.getAttribute('data-section');
     const cmdMap = {
-      home: null,
-      skills: 'cat skills.txt',
-      projects: 'ls projects/',
+      home: 'cat whoami.md',
       experience: 'cat experience.md',
       education: 'cat education.md',
-      contact: 'cat contact.txt'
+      projects: 'ls projects/',
+      skills: 'cat skills.md',
+      contact: 'cat contact.md',
+      help: 'help'
     };
     document.querySelectorAll('#top-nav a').forEach(a => a.classList.remove('active'));
     link.classList.add('active');
@@ -249,8 +250,8 @@ inputEl.addEventListener('keydown', e => {
     inputEl.value = history[histIdx] ?? '';
     e.preventDefault();
   } else if (e.key === 'Tab') {
-    const val = inputEl.value.trim();
-    const match = Object.keys(COMMANDS).find(c => c.startsWith(val) && c !== val);
+    const val = inputEl.value.trim().toLowerCase();
+    const match = Object.keys(COMMANDS).find(c => c.toLowerCase().startsWith(val) && c.toLowerCase() !== val);
     if (match) inputEl.value = match;
     e.preventDefault();
   } else if (e.key === 'l' && e.ctrlKey) {
@@ -297,12 +298,36 @@ function bar(pct, color = 'var(--bright-green)') {
 }
 
 function closeBlock(el) {
-  const block = el.closest('.output-block');
-  if (block) {
-    block.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
-    block.style.opacity = '0';
-    block.style.transform = 'translateY(-8px)';
-    setTimeout(() => block.remove(), 250);
+  const card = el.closest('.project-card');
+  if (card) {
+    const cmdOutput = card.closest('.cmd-output');
+    const block = card.closest('.output-block');
+
+    card.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(-8px)';
+
+    setTimeout(() => {
+      card.remove();
+      // If there are no other project cards left in this command output, remove the entire output block
+      if (cmdOutput && cmdOutput.querySelectorAll('.project-card').length === 0) {
+        if (block) {
+          block.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+          block.style.opacity = '0';
+          block.style.transform = 'translateY(-8px)';
+          setTimeout(() => block.remove(), 250);
+        }
+      }
+    }, 250);
+  } else {
+    // Fallback: If clicked close on a non-project block (if any exists in future)
+    const block = el.closest('.output-block');
+    if (block) {
+      block.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+      block.style.opacity = '0';
+      block.style.transform = 'translateY(-8px)';
+      setTimeout(() => block.remove(), 250);
+    }
   }
 }
 
@@ -319,16 +344,18 @@ const COMMANDS = {
   'help': () => `
 <div class="out-pre"><span class="green bold">Available commands:</span>
 
-  <span class="cyan">neofetch</span>             — System overview
-  <span class="cyan">whoami</span>               — About me
-  <span class="cyan">cat skills.txt</span>       — Technical skill stack
-  <span class="cyan">ls projects/</span>         — List all projects
-  <span class="cyan">cat projects/&lt;n&gt;</span>     — Open a project (e.g. <span class="yellow">cat projects/freertos</span>)
-  <span class="cyan">cat experience.md</span>    — Work experience & education
-  <span class="cyan">cat contact.txt</span>      — Get in touch
-  <span class="cyan">uname -a</span>             — System info
-  <span class="cyan">clear</span>                — Clear terminal  <span class="dim">(or Ctrl+L)</span>
-  <span class="cyan">help</span>                 — Show this message
+  <span class="cyan">cat whoami.md</span>           — About me
+  <span class="cyan">cat experience.md</span>       — Work experience
+  <span class="cyan">cat education.md</span>        — Academic background
+  <span class="cyan">ls projects/</span>            — List all projects
+  <span class="cyan">cat projects/&lt;n&gt;</span>        — Open a project (e.g. <span class="yellow">cat projects/freertos</span>)
+  <span class="cyan">cat skills.md</span>           — Technical skill stack
+  <span class="cyan">cat contact.md</span>          — Get in touch
+  <span class="cyan">play</span>                    — Play Firmware Bug Defender (Shooter)
+  <span class="cyan">neofetch</span>                — System overview
+  <span class="cyan">uname -a</span>                — System info
+  <span class="cyan">clear</span>                   — Clear terminal  <span class="dim">(or Ctrl+L)</span>
+  <span class="cyan">help</span>                    — Show this message
 
 <span class="dim">Tip: Use ↑ ↓ arrow keys for history, Tab to autocomplete.</span>
 <span class="dim">Click any project name in <span class="cyan">ls projects/</span> to open it directly.</span>
@@ -336,29 +363,31 @@ const COMMANDS = {
 
   'neofetch': () => `<div class="neofetch-grid">
   <pre class="neofetch-ascii">
-      ┌─┬──┬──┬──┬─┐
-   ───┤ │  │  │  │ ├───
-   ───┤            ├───
-   ───┤  A.SENGAR  ├───
-   ───┤   v2.0     ├───
-   ───┤            ├───
-   ───┤ │  │  │  │ ├───
-      └─┴──┴──┴──┴─┘
+<span class="dim">                           </span>
+<span class="green">        ┌──────────────┐</span>
+<span class="green">   1 ───┤              ├─── 12</span>
+<span class="green">   2 ───┤   A.SENGAR   ├─── 11</span>
+<span class="cyan">   3 ───┤    v2.0      ├─── 10</span>
+<span class="cyan">   4 ───┤   STM32WB    ├─── 9</span>
+<span class="green">   5 ───┤  CORTEX-M4   ├─── 8</span>
+<span class="green">   6 ───┤              ├─── 7</span>
+<span class="green">        └──────┬───────┘</span>
+<span class="green">               ▼</span>
   </pre>
   <div class="neofetch-info">
     <div><span class="green bold">abhay</span><span class="dim">@</span><span class="blue bold">abhayportfolio</span></div>
     <div class="neofetch-separator">────────────────────────</div>
     <div><span class="yellow bold">OS</span><span class="dim">:</span> Firmware Engineer LTS</div>
     <div><span class="yellow bold">Host</span><span class="dim">:</span> Nokia (Firmware Dev Co-op)</div>
-    <div><span class="yellow bold">Kernel</span><span class="dim">:</span> M.S. Computer Engineering</div>
+    <div><span class="yellow bold">Kernel</span><span class="dim">:</span> M.S. Computer Engineering @ NC State</div>
     <div><span class="yellow bold">Uptime</span><span class="dim">:</span> since Aug 2024</div>
     <div><span class="yellow bold">Shell</span><span class="dim">:</span> C / C++ / Python / Bash</div>
-    <div><span class="yellow bold">DE</span><span class="dim">:</span> STM32 Cube IDE / Altium</div>
+    <div><span class="yellow bold">DE</span><span class="dim">:</span> STM32 Cube IDE / Altium Designer</div>
     <div><span class="yellow bold">WM</span><span class="dim">:</span> FreeRTOS / Bare-metal</div>
-    <div><span class="yellow bold">CPU</span><span class="dim">:</span> ARM Cortex-M0/M0+/M4</div>
-    <div><span class="yellow bold">GPU</span><span class="dim">:</span> N/A (bare-metal life)</div>
-    <div><span class="yellow bold">Memory</span><span class="dim">:</span> 3.65 / 4.00 GPA</div>
-    <div><span class="yellow bold">Disk</span><span class="dim">:</span> 2 degrees loaded</div>
+    <div><span class="yellow bold">CPU</span><span class="dim">:</span> ARM Cortex-M0 / M0+ / M4</div>
+    <div><span class="yellow bold">GPU</span><span class="dim">:</span> N/A (bare-metal developer)</div>
+    <div><span class="yellow bold">Memory</span><span class="dim">:</span> 3.7 / 4.00 GPA</div>
+    <div><span class="yellow bold">Disk</span><span class="dim">:</span> 2 degrees loaded (VIT + NC State)</div>
     <div><span class="yellow bold">Locale</span><span class="dim">:</span> San Jose, CA</div>
     <div class="neofetch-colors">
       <span style="background:var(--red)"></span>
@@ -373,14 +402,14 @@ const COMMANDS = {
   </div>
 </div>`,
 
-  'whoami': () => `
+  'cat whoami.md': () => `
 <div>
-  <div class="out-h">$ cat about.txt</div>
+  <div class="out-h">About Me</div>
   <div class="kv-row"><span class="kv-key">Name</span><span class="kv-value green bold">Abhay Pratap Singh Sengar</span></div>
-  <div class="kv-row"><span class="kv-key">Role</span><span class="kv-value">Firmware & Embedded Systems Engineer</span></div>
-  <div class="kv-row"><span class="kv-key">Current</span><span class="kv-value cyan">Firmware Dev Co-op @ Nokia</span></div>
-  <div class="kv-row"><span class="kv-key">Degree</span><span class="kv-value">M.S. Computer Engineering — NC State (3.65 GPA)</span></div>
-  <div class="kv-row"><span class="kv-key">Undergrad</span><span class="kv-value">B.Tech EEE — VIT Vellore (8.94/10)</span></div>
+  <div class="kv-row"><span class="kv-key">Seeking</span><span class="kv-value">Firmware & Embedded Systems Engineer</span></div>
+  <div class="kv-row"><span class="kv-key">Past Experience</span><span class="kv-value cyan">Firmware Dev Co-op @ Nokia</span></div>
+  <div class="kv-row"><span class="kv-key">Masters</span><span class="kv-value">M.S. Computer Engineering — NC State (3.65 GPA)</span></div>
+  <div class="kv-row"><span class="kv-key">Bachelors</span><span class="kv-value">B.Tech EEE — VIT Vellore (8.94/10)</span></div>
   <div class="kv-row"><span class="kv-key">Location</span><span class="kv-value">San Jose, CA</span></div>
   <div class="kv-row"><span class="kv-key">Focus</span><span class="kv-value">Firmware · RTOS · Embedded C/C++ · IoT · ARM</span></div>
   <div class="kv-row"><span class="kv-key">Status</span><span class="kv-value"><span class="green">● Open to full-time roles</span></span></div>
@@ -392,9 +421,10 @@ const COMMANDS = {
     firmware on ARM Cortex-M and FreeRTOS scheduling to IoT sensor networks with
     Zigbee/BLE and MQTT-based cloud pipelines.
   </div>
+    <div class="dim" style="margin-top:10px">Run <span class="cyan">cat experience.md</span> or click on experience in navigation bar to view work history.</div>
 </div>`,
 
-  'cat skills.txt': () => `
+  'cat skills.md': () => `
 <div>
   <div class="out-h">Languages</div>
   <div class="progress-row"><span class="progress-label">C / Embedded C</span>${bar(95)}<span class="bar-pct">95%</span></div>
@@ -456,14 +486,15 @@ const COMMANDS = {
 <div class="out-pre">  <span class="project-link" onclick="openProject('mppt')">mppt/</span>                <span class="dim">— MPPT DC-DC converter for photovoltaic systems</span>
 </div>
 
-<div class="dim" style="margin-top:8px">Click a project name or type <span class="cyan">cat projects/&lt;name&gt;</span> to view details.</div>
+<div class="dim" style="margin-top:8px">Click a project name or type <span class="cyan">cat projects/&lt;name&gt;</span> to view specific project, or click <span class="cyan">view all</span> to view all details.</div>
 </div>`,
 
   'cat projects/all': () => [
     'freertos', 'rtos-fault', 'gpio-analysis', 'img-stab',
     'care-link', 'attention-hw', 'ooo-processor',
     'matrix-reloaded', 'xinu', 'mppt'
-  ].map(name => COMMANDS[`cat projects/${name}`]()).join(''),
+  ].map(name => COMMANDS[`cat projects/${name}`]()).join('') +
+    `<div class="dim" style="margin-top:16px; margin-bottom:8px;">Tip: To close all projects at once, type <span class="cyan">clear</span> or press <span class="cyan">Ctrl+L</span>.</div>`,
 
   /* ═══ PROJECT DETAILS ═══════════════════════════════════ */
 
@@ -489,6 +520,7 @@ const COMMANDS = {
     <div>Stack: <span>C · FreeRTOS · ARM Cortex-M0 · UART · GPIO EXTI</span></div>
     <div>MCU: <span>STM32F091RC</span></div>
     <div>Utilization: <span>0.494 (RM) · 1.20 (overload test)</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Real_System_Project" target="_blank" rel="noopener" class="cyan">github.com/abhay202/FreeRTOS-Scheduling</a></span></div>
   </div>
 </div>`,
 
@@ -514,6 +546,7 @@ const COMMANDS = {
     <div>Stack: <span>C · RTOS · KL25Z · ST7789 LCD · Buck Converter</span></div>
     <div>MCU: <span>ARM Cortex-M0+ (KL25Z)</span></div>
     <div>Watchdog: <span>1 kHz · 41.667 µs fault detection</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/RTOS-Fault-Management" target="_blank" rel="noopener" class="cyan">github.com/abhay202/RTOS-Fault-Management</a></span></div>
   </div>
 </div>`,
 
@@ -539,6 +572,7 @@ const COMMANDS = {
     <div>Stack: <span>C · Linux · RPi 4B · GPIO · Kernel Interrupts</span></div>
     <div>Best Latency: <span>98.23 ns (polling)</span></div>
     <div>CPU Savings: <span>100% → &lt;8% (event-driven)</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/GPIO-Response-Analysis" target="_blank" rel="noopener" class="cyan">github.com/abhay202/GPIO-Response-Analysis</a></span></div>
   </div>
 </div>`,
 
@@ -563,6 +597,7 @@ const COMMANDS = {
     <div>Stack: <span>C · ARM NEON SIMD · RPi 4B · Cortex-A72</span></div>
     <div>Speedup: <span>21 ms → 1.9 ms/frame (11× faster)</span></div>
     <div>Optimization: <span>Scalar + NEON Vectorization</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/ARM-NEON-Image-Stabilization" target="_blank" rel="noopener" class="cyan">github.com/abhay202/ARM-NEON-Image-Stabilization</a></span></div>
   </div>
 </div>`,
 
@@ -589,6 +624,7 @@ const COMMANDS = {
     <div>Stack: <span>Python · MQTT · ESP8266 · Arduino · RPi 4B</span></div>
     <div>Sensors: <span>MAX3010x (100 Hz) · Sound (150 Hz) · IMU</span></div>
     <div>Pipeline: <span>MQTT → CSV → ML Inference</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Care-Link-IoT" target="_blank" rel="noopener" class="cyan">github.com/abhay202/Care-Link-IoT</a></span></div>
   </div>
 </div>`,
 
@@ -615,6 +651,7 @@ const COMMANDS = {
     <div>Stack: <span>SystemVerilog · SRAM · Synthesis Tools</span></div>
     <div>Area: <span>9,215.5 µm²</span></div>
     <div>Clock: <span>6.8 ns · 2850 cycles</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Self-Attention-Accelerator" target="_blank" rel="noopener" class="cyan">github.com/abhay202/Self-Attention-Accelerator</a></span></div>
   </div>
 </div>`,
 
@@ -639,6 +676,7 @@ const COMMANDS = {
     <div>Stack: <span>C++ · Microarchitecture · Dynamic Scheduling</span></div>
     <div>Features: <span>IQ · ROB · RMT · N-wide fetch/issue</span></div>
     <div>Validation: <span>Trace-file verified IPC measurements</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Out-of-Order-Simulator" target="_blank" rel="noopener" class="cyan">github.com/abhay202/Out-of-Order-Simulator</a></span></div>
   </div>
 </div>`,
 
@@ -662,6 +700,7 @@ const COMMANDS = {
     <div>Stack: <span>C++ · Flex · Bison · LLVM IR · Eigen</span></div>
     <div>Static Instrs: <span>243 (optimized)</span></div>
     <div>Rank: <span>Top 3 in class</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Matrix-Reloaded-Compiler" target="_blank" rel="noopener" class="cyan">github.com/abhay202/Matrix-Reloaded-Compiler</a></span></div>
   </div>
 </div>`,
 
@@ -688,6 +727,7 @@ const COMMANDS = {
     <div>Stack: <span>C · Xinu OS · ARM · Kernel Development</span></div>
     <div>Features: <span>fork() · Lottery · MLFQ Scheduling</span></div>
     <div>Testing: <span>15+ process test suites</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Xinu-Kernel-Extensions" target="_blank" rel="noopener" class="cyan">github.com/abhay202/Xinu-Kernel-Extensions</a></span></div>
   </div>
 </div>`,
 
@@ -714,6 +754,7 @@ const COMMANDS = {
     <div>Stack: <span>C · Arduino · MATLAB · Power Electronics</span></div>
     <div>Power: <span>1.5 kW · 96.5% tracking efficiency</span></div>
     <div>Converter: <span>20 kHz boost · 190 µH · ≥80 µF</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/PV-MPPT-Converter" target="_blank" rel="noopener" class="cyan">github.com/abhay202/PV-MPPT-Converter</a></span></div>
   </div>
 </div>`,
 
@@ -721,7 +762,7 @@ const COMMANDS = {
 
   'cat experience.md': () => `
 <div>
-  <div class="out-h">💼  Work Experience</div>
+  <div class="out-h">Work Experience</div>
 
   <div class="exp-card">
     <div class="exp-header">
@@ -729,7 +770,7 @@ const COMMANDS = {
         <span class="exp-title">Firmware Development Co-op</span>
         <span class="exp-company"> — Nokia</span>
       </div>
-      <span class="exp-date">Jan 2026 – May 2026</span>
+      <span class="exp-date">Jan 2026 - May 2026</span>
     </div>
     <div class="exp-location">San Jose, California</div>
     <ul class="exp-bullets">
@@ -746,7 +787,7 @@ const COMMANDS = {
         <span class="exp-title">Embedded Software Intern</span>
         <span class="exp-company"> — Digineous Technologies</span>
       </div>
-      <span class="exp-date">Aug 2023 – Feb 2024</span>
+      <span class="exp-date">Aug 2023 - Feb 2024</span>
     </div>
     <div class="exp-location">Pune, India</div>
     <ul class="exp-bullets">
@@ -760,7 +801,7 @@ const COMMANDS = {
         <span class="exp-title">Research Intern</span>
         <span class="exp-company"> — BARC (Bhabha Atomic Research Centre)</span>
       </div>
-      <span class="exp-date">Dec 2022 – May 2023</span>
+      <span class="exp-date">Dec 2022 - May 2023</span>
     </div>
     <div class="exp-location">Mumbai, Maharashtra, India · On-site</div>
     <ul class="exp-bullets">
@@ -768,7 +809,7 @@ const COMMANDS = {
       <li>Led end-to-end testing and validation of battery unit circuits, researching and deploying strategies to minimize energy usage in rectifier units — resulting in measurable performance gains and strict adherence to quality standards.</li>
     </ul>
   </div>
-  <div class="dim" style="margin-top:10px">Run <span class="cyan">cat education.md</span> to view academic background.</div>
+  <div class="dim" style="margin-top:10px">Run <span class="cyan">cat education.md</span> or click on education in navigation bar to view academic background.</div>
 </div>`,
 
   'cat education.md': () => `
@@ -781,7 +822,7 @@ const COMMANDS = {
       <span class="edu-date">Aug 2024 -  May 2026</span>
     </div>
     <div class="edu-degree">Master of Science, Computer Engineering</div>
-    <div class="edu-gpa">GPA: 3.65 / 4.00</div>
+    <div class="edu-gpa">GPA: 3.7 / 4.00</div>
   </div>
 
   <div class="edu-card">
@@ -804,10 +845,10 @@ const COMMANDS = {
     <span class="chip">Operating Systems</span>
     <span class="chip">Power Electronics</span>
   </div>
-  <div class="dim" style="margin-top:10px">Run <span class="cyan">cat experience.md</span> to view work history.</div>
+  <div class="dim" style="margin-top:20px">Run <span class="cyan">ls projects/</span> or click on projects in navigation bar to view projects (click <span class="cyan">view all</span> to see all descriptions).</div>
 </div>`,
 
-  'cat contact.txt': () => `
+  'cat contact.md': () => `
 <div>
   <div class="out-h">Contact</div>
   <div class="kv-row"><span class="kv-key">Email</span><span class="kv-value"><a class="cyan" href="mailto:apsengar@ncsu.edu">apsengar@ncsu.edu</a></span></div>
@@ -826,13 +867,27 @@ const COMMANDS = {
     output.innerHTML = '';
     return null;
   },
+  'play': () => {
+    const gameId = ++shooterGameCount;
+    setTimeout(() => initShooterGame(gameId), 50);
+    return renderShooterBoard(gameId);
+  },
+  'shooter': () => COMMANDS['play'](),
+  'tictactoe': () => {
+    const gameId = ++tttGameCount;
+    return renderTTTBoard(gameId, Array(9).fill(' '));
+  },
+  'whoami': () => COMMANDS['cat whoami.md'](),
+  'cat skills.txt': () => COMMANDS['cat skills.md'](),
+  'cat contact.txt': () => COMMANDS['cat contact.md'](),
 };
 
 /* ── Command runner ───────────────────────────────────────── */
 function runCmd(raw) {
   const cmd = raw.trim();
-  if (COMMANDS[cmd]) {
-    const result = COMMANDS[cmd]();
+  const lowerCmd = cmd.toLowerCase();
+  if (COMMANDS[lowerCmd]) {
+    const result = COMMANDS[lowerCmd]();
     if (result !== null) appendBlock(result, cmd);
   } else {
     appendBlock(
@@ -842,3 +897,699 @@ function runCmd(raw) {
     );
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   0 and 1 TIC TAC TOE GAME ENGINE
+   ═══════════════════════════════════════════════════════════ */
+let tttGameCount = 0;
+
+function renderTTTBoard(gameId, board, statusText = "Your turn! Click a cell to place '1'.") {
+  const cell = (idx) => {
+    const val = board[idx];
+    if (val === ' ') {
+      return `<button class="ttt-cell" onclick="makeTTTMove(${gameId}, ${idx}, '${board.join('')}')">·</button>`;
+    } else {
+      const cls = val === '1' ? 'green bold' : 'yellow bold';
+      return `<span class="ttt-cell-taken ${cls}">${val}</span>`;
+    }
+  };
+
+  return `
+<div class="ttt-container" id="ttt-game-${gameId}">
+  <style>
+    .ttt-container {
+      margin: 10px 0;
+      padding: 14px;
+      background: var(--bg1);
+      border: 1px solid var(--bg3);
+      border-radius: var(--radius-sm);
+      display: inline-block;
+      min-width: 200px;
+    }
+    .ttt-board {
+      display: grid;
+      grid-template-columns: repeat(3, 40px);
+      grid-gap: 6px;
+      margin: 12px 0;
+    }
+    .ttt-cell {
+      width: 40px;
+      height: 40px;
+      background: var(--bg2);
+      border: 1px solid var(--bg3);
+      color: var(--fg-dim);
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .ttt-cell:hover {
+      background: var(--bg3);
+      border-color: var(--bright-green);
+      color: var(--bright-green);
+    }
+    .ttt-cell-taken {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      border: 1px solid var(--bg3);
+      background: var(--bg1);
+      border-radius: 4px;
+    }
+    .ttt-row {
+      display: contents;
+    }
+  </style>
+  <div class="out-h" style="margin-top: 0;">0 and 1 Tic-Tac-Toe</div>
+  <div class="ttt-status dim" style="font-size: 0.8rem; line-height: 1.4;">${statusText}</div>
+  <div class="ttt-board">
+    ${cell(0)} ${cell(1)} ${cell(2)}
+    ${cell(3)} ${cell(4)} ${cell(5)}
+    ${cell(6)} ${cell(7)} ${cell(8)}
+  </div>
+  <button class="shortcut" style="font-size: 0.72rem; padding: 2px 8px;" onclick="resetTTT(${gameId})">Restart</button>
+</div>`;
+}
+
+window.makeTTTMove = function(gameId, playerIdx, boardStr) {
+  let board = boardStr.split('');
+  board[playerIdx] = '1';
+
+  if (checkTTTWin(board, '1')) {
+    updateTTTUI(gameId, board, "🎉 Player '1' wins!");
+    return;
+  }
+  
+  if (!board.includes(' ')) {
+    updateTTTUI(gameId, board, "👔 It's a tie!");
+    return;
+  }
+
+  const emptyIndices = board.map((val, idx) => val === ' ' ? idx : null).filter(val => val !== null);
+  if (emptyIndices.length > 0) {
+    const cpuIdx = getBestTTTMove(board, '0', '1') ?? emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+    board[cpuIdx] = '0';
+    
+    if (checkTTTWin(board, '0')) {
+      updateTTTUI(gameId, board, "💻 Computer '0' wins!");
+      return;
+    }
+  }
+
+  if (!board.includes(' ')) {
+    updateTTTUI(gameId, board, "👔 It's a tie!");
+    return;
+  }
+
+  updateTTTUI(gameId, board, "Your turn! Click a cell to place '1'.");
+};
+
+window.checkTTTWin = function(board, char) {
+  const winLines = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+  ];
+  return winLines.some(line => line.every(idx => board[idx] === char));
+};
+
+window.getBestTTTMove = function(board, cpuChar, playerChar) {
+  const winLines = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+  ];
+
+  for (let line of winLines) {
+    const chars = line.map(idx => board[idx]);
+    if (chars.filter(c => c === cpuChar).length === 2 && chars.filter(c => c === ' ').length === 1) {
+      return line[chars.indexOf(' ')];
+    }
+  }
+
+  for (let line of winLines) {
+    const chars = line.map(idx => board[idx]);
+    if (chars.filter(c => c === playerChar).length === 2 && chars.filter(c => c === ' ').length === 1) {
+      return line[chars.indexOf(' ')];
+    }
+  }
+
+  if (board[4] === ' ') return 4;
+  return null;
+};
+
+window.updateTTTUI = function(gameId, board, statusText) {
+  const gameEl = document.getElementById(`ttt-game-${gameId}`);
+  if (gameEl) {
+    gameEl.outerHTML = renderTTTBoard(gameId, board, statusText);
+  }
+};
+
+window.resetTTT = function(gameId) {
+  updateTTTUI(gameId, Array(9).fill(' '), "Game restarted! Click a cell to place '1'.");
+};
+
+/* ═══════════════════════════════════════════════════════════
+   FIRMWARE BUG DEFENDER GAME ENGINE (TERMINAL SHOOTER)
+   ═══════════════════════════════════════════════════════════ */
+let shooterGameCount = 0;
+let shooterGames = {};
+
+// Web Audio Synth for 8-bit retro sound effects
+let shooterAudioCtx = null;
+function getShooterAudioCtx() {
+  if (!shooterAudioCtx) {
+    shooterAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (shooterAudioCtx.state === 'suspended') {
+    shooterAudioCtx.resume();
+  }
+  return shooterAudioCtx;
+}
+
+window.playShooterSound = function(type) {
+  try {
+    const ctx = getShooterAudioCtx();
+    if (!ctx) return;
+    
+    const now = ctx.currentTime;
+    
+    if (type === 'laser') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(350, now);
+      osc.frequency.exponentialRampToValueAtTime(1000, now + 0.1);
+      gain.gain.setValueAtTime(0.06, now);
+      gain.gain.exponentialRampToValueAtTime(0.005, now + 0.1);
+      osc.start(now);
+      osc.stop(now + 0.1);
+    } else if (type === 'hit') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(160, now);
+      osc.frequency.linearRampToValueAtTime(30, now + 0.15);
+      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.exponentialRampToValueAtTime(0.005, now + 0.15);
+      osc.start(now);
+      osc.stop(now + 0.15);
+    } else if (type === 'gameover') {
+      const notes = [440, 392, 349, 293]; // A4, G4, F4, D4
+      notes.forEach((freq, idx) => {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.connect(g);
+        g.connect(ctx.destination);
+        o.type = 'sawtooth';
+        o.frequency.setValueAtTime(freq, now + idx * 0.12);
+        g.gain.setValueAtTime(0.08, now + idx * 0.12);
+        g.gain.exponentialRampToValueAtTime(0.005, now + idx * 0.12 + 0.18);
+        o.start(now + idx * 0.12);
+        o.stop(now + idx * 0.12 + 0.18);
+      });
+    }
+  } catch (e) {
+    // Fail silently if blocked or unsupported
+  }
+};
+
+// Local storage high score persistence
+window.getShooterHighScore = function() {
+  try {
+    return parseInt(localStorage.getItem('bug_defender_highscore') || '0', 10);
+  } catch (e) {
+    return 0;
+  }
+};
+
+window.saveShooterHighScore = function(score) {
+  try {
+    const currentHigh = getShooterHighScore();
+    if (score > currentHigh) {
+      localStorage.setItem('bug_defender_highscore', score.toString());
+    }
+  } catch (e) {}
+};
+
+window.renderShooterBoard = function(gameId) {
+  return `
+<div class="ttt-container shooter-container" id="shooter-game-${gameId}" style="max-width: 270px; text-align: left;" tabindex="0">
+  <style>
+    .shooter-container {
+      margin: 10px 0;
+      padding: 14px;
+      background: var(--bg1);
+      border: 1px solid var(--bg3);
+      border-radius: var(--radius-sm);
+      display: inline-block;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .shooter-container:focus-within {
+      border-color: var(--bright-green);
+      box-shadow: 0 0 14px rgba(78, 201, 86, 0.4);
+    }
+    .shooter-canvas-wrapper {
+      position: relative;
+      background: #000;
+      border: 1px solid var(--bg3);
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 12px 0 8px;
+      cursor: crosshair;
+      width: 240px;
+      height: 360px;
+    }
+    .shooter-canvas {
+      display: block;
+      background: #05070a;
+    }
+    .shooter-btn {
+      width: 100%;
+      padding: 6px 12px;
+      background: var(--bg2);
+      border: 1px solid var(--bg3);
+      color: var(--bright-green);
+      font-size: 0.8rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.15s;
+      text-transform: uppercase;
+      font-weight: bold;
+      text-align: center;
+      display: block;
+      box-sizing: border-box;
+    }
+    .shooter-btn:hover {
+      background: var(--bg3);
+      border-color: var(--bright-green);
+      color: var(--fg);
+    }
+  </style>
+  <div class="out-h" style="margin-top: 0; font-size: 1.05rem;">Firmware Bug Defender</div>
+  <div class="dim" style="font-size: 0.76rem; margin-bottom: 4px; line-height: 1.4;">
+    Slide <span class="cyan">Mouse / Touch</span> on board or use <span class="cyan">A / D / Arrows</span>. Auto-fires lasers continuously!
+  </div>
+  <div class="shooter-canvas-wrapper">
+    <canvas id="shooter-canvas-${gameId}" class="shooter-canvas" width="240" height="360"></canvas>
+  </div>
+  <button class="shooter-btn" onclick="resetShooter(${gameId})">Reboot Core</button>
+</div>`;
+};
+
+window.initShooterGame = function(gameId) {
+  const canvas = document.getElementById(`shooter-canvas-${gameId}`);
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const game = {
+    player: { x: 120, y: 325, width: 28, height: 14, targetX: undefined },
+    bullets: [],
+    enemies: [],
+    particles: [],
+    stars: [],
+    score: 0,
+    highScore: getShooterHighScore(),
+    lives: 3,
+    level: 1,
+    over: false,
+    frameId: null,
+    keys: {},
+    lastFireTime: 0,
+    lastSpawnTime: 0
+  };
+
+  shooterGames[gameId] = game;
+
+  // Initialize scrolling stars
+  for (let i = 0; i < 20; i++) {
+    game.stars.push({
+      x: Math.random() * 240,
+      y: Math.random() * 360,
+      speed: Math.random() * 0.4 + 0.15,
+      size: Math.random() * 1.5 + 0.5
+    });
+  }
+
+  // Mouse controls
+  canvas.addEventListener('mousemove', e => {
+    if (game.over) return;
+    const rect = canvas.getBoundingClientRect();
+    game.player.targetX = e.clientX - rect.left;
+    try { getShooterAudioCtx(); } catch (err) {}
+  });
+
+  // Touch controls
+  canvas.addEventListener('touchmove', e => {
+    if (game.over) return;
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    game.player.targetX = touch.clientX - rect.left;
+    try { getShooterAudioCtx(); } catch (err) {}
+  }, { passive: false });
+
+  // Keyboard continuous controls
+  const container = document.getElementById(`shooter-game-${gameId}`);
+  if (container) {
+    container.addEventListener('keydown', e => {
+      if (game.over) return;
+      const key = e.key.toLowerCase();
+      if (['arrowleft', 'arrowright', 'a', 'd'].includes(key)) {
+        game.keys[key] = true;
+        game.player.targetX = undefined; // Override mouse
+        e.preventDefault();
+        e.stopPropagation();
+        try { getShooterAudioCtx(); } catch (err) {}
+      }
+    });
+
+    container.addEventListener('keyup', e => {
+      const key = e.key.toLowerCase();
+      if (['arrowleft', 'arrowright', 'a', 'd'].includes(key)) {
+        game.keys[key] = false;
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
+  }
+
+  const enemyLabels = [
+    { text: "OVF", hp: 1, color: "#e06c75" },  // Stack Overflow
+    { text: "BUG", hp: 1, color: "#e06c75" },  // Compiler bug
+    { text: "WDT", hp: 2, color: "#d19a66" },  // Watchdog timeout
+    { text: "ISR", hp: 1, color: "#e5c07b" },  // Unhandled ISR
+    { text: "ERR", hp: 1, color: "#e06c75" },  // Standard Error
+    { text: "NULL", hp: 2, color: "#c678dd" }  // Null pointer dereference
+  ];
+
+  function spawnEnemy() {
+    const label = enemyLabels[Math.floor(Math.random() * enemyLabels.length)];
+    game.enemies.push({
+      x: Math.random() * 200 + 20,
+      y: -20,
+      vx: (Math.random() - 0.5) * 0.6,
+      vy: Math.random() * 0.5 + 0.6 + (game.level * 0.12),
+      width: 24,
+      height: 14,
+      hp: label.hp,
+      maxHp: label.hp,
+      text: label.text,
+      color: label.color
+    });
+  }
+
+  function spawnParticles(x, y, count) {
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 2 + 0.5;
+      game.particles.push({
+        x: x,
+        y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        color: Math.random() < 0.35 ? "#56b6c2" : "#4ec956",
+        alpha: 1.0,
+        decay: Math.random() * 0.04 + 0.02,
+        size: Math.random() * 2.5 + 1.0
+      });
+    }
+  }
+
+  // Animation Loop
+  function loop() {
+    const currentCanvas = document.getElementById(`shooter-canvas-${gameId}`);
+    if (!currentCanvas) {
+      if (game.frameId) cancelAnimationFrame(game.frameId);
+      delete shooterGames[gameId];
+      return;
+    }
+
+    if (!game.over) {
+      update();
+    }
+    draw();
+
+    game.frameId = requestAnimationFrame(loop);
+  }
+
+  function update() {
+    const now = Date.now();
+
+    // 1. Auto-firing core laser
+    if (now - game.lastFireTime > 180) {
+      game.bullets.push({
+        x: game.player.x,
+        y: game.player.y - 8,
+        vy: -6,
+        size: 3
+      });
+      game.lastFireTime = now;
+      playShooterSound('laser');
+    }
+
+    // 2. Enemy Spawning based on level progression
+    const spawnDelay = Math.max(450, 1100 - (game.level * 100));
+    if (now - game.lastSpawnTime > spawnDelay) {
+      spawnEnemy();
+      game.lastSpawnTime = now;
+    }
+
+    // 3. Player horizontal position lerping/sliding
+    if (game.player.targetX !== undefined) {
+      // Lerp mouse target coordinates
+      game.player.x += (game.player.targetX - game.player.x) * 0.32;
+    } else {
+      // Slide horizontally via keyboard
+      const speed = 4.8;
+      if (game.keys['a'] || game.keys['arrowleft']) {
+        game.player.x -= speed;
+      }
+      if (game.keys['d'] || game.keys['arrowright']) {
+        game.player.x += speed;
+      }
+    }
+    // Clamp player boundaries
+    game.player.x = Math.max(game.player.width / 2 + 4, Math.min(240 - game.player.width / 2 - 4, game.player.x));
+
+    // 4. Update background scrolling star field
+    game.stars.forEach(s => {
+      s.y += s.speed;
+      if (s.y > 360) {
+        s.y = 0;
+        s.x = Math.random() * 240;
+      }
+    });
+
+    // 5. Update lasers
+    game.bullets.forEach((b, idx) => {
+      b.y += b.vy;
+      if (b.y < -10) {
+        game.bullets.splice(idx, 1);
+      }
+    });
+
+    // 6. Update digital bugs
+    game.enemies.forEach((e, idx) => {
+      e.y += e.vy;
+      e.x += e.vx;
+      
+      // Bounce bugs off side walls
+      if (e.x <= 12 || e.x >= 228) {
+        e.vx = -e.vx;
+      }
+
+      // Check if bug slipped through stack (past player border)
+      if (e.y > 360) {
+        game.enemies.splice(idx, 1);
+        game.lives--;
+        playShooterSound('hit');
+        
+        // Spawn error particles
+        spawnParticles(e.x, 340, 12);
+        
+        if (game.lives <= 0) {
+          game.over = true;
+          saveShooterHighScore(game.score);
+          playShooterSound('gameover');
+        }
+      }
+    });
+
+    // 7. Update glowing particles
+    game.particles.forEach((p, idx) => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.alpha -= p.decay;
+      if (p.alpha <= 0) {
+        game.particles.splice(idx, 1);
+      }
+    });
+
+    // 8. Laser vs Bug collision detection
+    game.bullets.forEach((b, bIdx) => {
+      game.enemies.forEach((e, eIdx) => {
+        const dist = Math.sqrt((b.x - e.x) * (b.x - e.x) + (b.y - e.y) * (b.y - e.y));
+        if (dist < 15) {
+          // Collision!
+          game.bullets.splice(bIdx, 1);
+          e.hp--;
+          
+          if (e.hp <= 0) {
+            game.enemies.splice(eIdx, 1);
+            game.score += 10;
+            playShooterSound('hit');
+            spawnParticles(e.x, e.y, 14);
+            
+            // Level progression logic
+            const nextLevel = Math.floor(game.score / 100) + 1;
+            if (nextLevel > game.level) {
+              game.level = nextLevel;
+            }
+          }
+        }
+      });
+    });
+  }
+
+  function draw() {
+    // Backdrop space
+    ctx.fillStyle = '#04060a';
+    ctx.fillRect(0, 0, 240, 360);
+
+    // Draw scrolling stars
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+    game.stars.forEach(s => {
+      ctx.fillRect(s.x, s.y, s.size, s.size);
+    });
+
+    // Draw particle explosions
+    game.particles.forEach(p => {
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    });
+
+    // Draw lasers (glow)
+    ctx.save();
+    ctx.shadowBlur = 6;
+    ctx.shadowColor = '#56b6c2';
+    ctx.fillStyle = '#56b6c2';
+    game.bullets.forEach(b => {
+      ctx.fillRect(b.x - 1, b.y, 2, 7);
+    });
+    ctx.restore();
+
+    // Draw bugs (as glowing register blocks)
+    game.enemies.forEach(e => {
+      ctx.save();
+      ctx.shadowBlur = 4;
+      ctx.shadowColor = e.color;
+      ctx.strokeStyle = e.color;
+      ctx.lineWidth = 1.5;
+      
+      // Draw rectangular warning chip
+      ctx.strokeRect(e.x - 12, e.y - 7, 24, 14);
+      
+      // Draw labeling text
+      ctx.fillStyle = e.color;
+      ctx.font = 'bold 8px var(--font-mono)';
+      ctx.textAlign = 'center';
+      ctx.fillText(e.text, e.x, e.y + 3);
+      ctx.restore();
+    });
+
+    // Draw Player Ship (STM32 CPU chip aesthetic)
+    ctx.save();
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = '#4ec956';
+    
+    // Outer border
+    ctx.strokeStyle = '#4ec956';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(game.player.x - 12, game.player.y - 6, 24, 12);
+    
+    // Core silicon
+    ctx.fillStyle = '#060a0f';
+    ctx.fillRect(game.player.x - 11, game.player.y - 5, 22, 10);
+    
+    // MCU pins
+    ctx.fillStyle = '#56b6c2';
+    for (let i = -10; i <= 10; i += 5) {
+      // top pins
+      ctx.fillRect(game.player.x + i - 1, game.player.y - 8, 2, 2);
+      // bottom pins
+      ctx.fillRect(game.player.x + i - 1, game.player.y + 6, 2, 2);
+    }
+    ctx.restore();
+
+    // Draw HUD metrics
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+    ctx.font = 'bold 9px var(--font-mono)';
+    ctx.fillText(`LVL:${game.level}`, 6, 15);
+    ctx.fillText(`HIGH:${game.highScore}`, 182, 15);
+    ctx.fillText(`SCORE:${game.score}`, 6, 350);
+
+    // Draw digital life indicator bars
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+    ctx.fillRect(174, 343, 60, 8); // Track
+    
+    ctx.fillStyle = game.lives === 1 ? '#e06c75' : '#4ec956';
+    ctx.fillRect(174, 343, game.lives * 20, 8); // Filled bars
+
+    // Game Over Overlay
+    if (game.over) {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
+      ctx.fillRect(0, 0, 240, 360);
+
+      ctx.fillStyle = '#e06c75';
+      ctx.font = 'bold 16px var(--font-mono)';
+      ctx.textAlign = 'center';
+      ctx.fillText('STACK DUMP OVERFLOW', 120, 140);
+
+      ctx.fillStyle = '#fff';
+      ctx.font = '10px var(--font-mono)';
+      ctx.fillText(`Score: ${game.score} pts`, 120, 180);
+      ctx.fillText(`High Score: ${getShooterHighScore()} pts`, 120, 205);
+
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      ctx.font = '8px var(--font-mono)';
+      ctx.fillText('Click Reboot Core below to patch stack', 120, 240);
+      ctx.textAlign = 'left';
+    }
+  }
+
+  // Spawn initial enemy
+  game.lastSpawnTime = Date.now();
+  spawnEnemy();
+
+  // Run loop
+  loop();
+};
+
+window.resetShooter = function(gameId) {
+  const game = shooterGames[gameId];
+  if (game) {
+    if (game.frameId) cancelAnimationFrame(game.frameId);
+  }
+  initShooterGame(gameId);
+};

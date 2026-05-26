@@ -289,6 +289,36 @@ a:hover {
     font-weight: 500;
 }
 
+/* Resume download button in nav */
+.resume-nav-item { margin-left: 8px !important; }
+
+.resume-btn {
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px !important;
+    margin: 6px 0;
+    color: var(--bg) !important;
+    background: var(--green) !important;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.82rem !important;
+    letter-spacing: 0.04em;
+    transition: background 0.2s ease, box-shadow 0.2s ease !important;
+    box-shadow: 0 0 8px rgba(78, 201, 86, 0.3);
+}
+
+.resume-btn:hover {
+    background: var(--bright-green) !important;
+    box-shadow: 0 0 16px rgba(78, 201, 86, 0.5) !important;
+    color: #000 !important;
+}
+
+.resume-icon {
+    font-size: 1rem;
+    line-height: 1;
+}
+
 /* ── Title ──────────────────────────────────────────────── */
 .title {
     font-size: clamp(2rem, 6vw, 3rem);
