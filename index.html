@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhay Sengar | Portfolio</title>
+    <meta name="description" content="Abhay Sengar – Computer Engineering Master's Student specializing in Embedded Systems, FPGAs, Linux, and Edge AI.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ══ TERMINAL VIEW ═══════════════════════════════════════════ -->
+    <div id="terminal-view">
+        <div class="window">
+            <div class="titlebar">
+                <div class="titlebar-left">
+                    <span class="btn close"></span>
+                    <span class="btn minimize"></span>
+                    <span class="btn maximize"></span>
+                </div>
+                <div class="titlebar-center">abhay@portfolio: ~</div>
+                <div class="titlebar-right">bash — 80×24</div>
+                <button class="mode-toggle" id="mode-toggle-terminal" title="Switch to normal view">☀ Normal View</button>
+            </div>
+
+            <div class="terminal" id="terminal">
+
+                <!-- MOTD / Banner -->
+                <div class="block motd">
+                    <pre class="ascii-art">
+ ░█████╗░██████╗░██╗  ██████╗░░█████╗░██████╗░████████╗
+ ██╔══██╗██╔══██╗██║  ██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝
+ ███████║██████╦╝██║  ██████╔╝██║░░██║██████╔╝░░░██║░░░
+ ██╔══██║██╔══██╗██║  ██╔═══╝░██║░░██║██╔══██╗░░░██║░░░
+ ██║░░██║██████╦╝██║  ██║░░░░░╚█████╔╝██║░░██║░░░██║░░░
+ ╚═╝░░╚═╝╚═════╝░╚═╝  ╚═╝░░░░░░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░</pre>
+                    <div class="motd-line">Welcome to <span class="green">abhay-portfolio</span> 24.04 LTS (GNU/Linux x86_64)</div>
+                    <div class="motd-line"><span class="dim">System information as of <span class="white" id="sys-date"></span></span></div>
+                    <br>
+                    <div class="motd-kv"><span class="label"> System load:</span> <span class="green">0.12</span></div>
+                    <div class="motd-kv"><span class="label"> Usage of /:</span> <span class="green">42% of 512GB SSD</span></div>
+                    <div class="motd-kv"><span class="label"> Users logged in:</span> <span class="green">1</span></div>
+                    <div class="motd-kv"><span class="label"> Status:</span> <span class="green">● Available for opportunities</span></div>
+                    <br>
+                    <div class="motd-line dim">Type <span class="cyan">help</span> to see available commands, or click any <span class="yellow">[shortcut]</span> below.</div>
+                </div>
+
+                <!-- Shortcut nav bar -->
+                <div class="block shortcut-bar">
+                    <span class="prompt-static">abhay@portfolio:~$</span>
+                    <span class="cmd-shortcuts">
+                        <button class="shortcut" data-cmd="whoami">whoami</button>
+                        <button class="shortcut" data-cmd="cat skills.txt">skills</button>
+                        <button class="shortcut" data-cmd="ls projects/">projects</button>
+                        <button class="shortcut" data-cmd="cat experience.md">experience</button>
+                        <button class="shortcut" data-cmd="cat contact.txt">contact</button>
+                        <button class="shortcut" data-cmd="help">help</button>
+                    </span>
+                </div>
+
+                <div id="output-area"></div>
+
+                <div class="input-line" id="input-line">
+                    <span class="prompt">
+                        <span class="user">abhay</span><span class="at">@</span><span class="host">portfolio</span><span class="colon">:</span><span class="path">~</span><span class="dollar">$</span>
+                    </span>
+                    <input type="text" id="cli-input" autocomplete="off" spellcheck="false" autofocus aria-label="Terminal input">
+                    <span class="cursor-blink" id="fake-cursor"></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ CLEAN VIEW (non-technical mode) ═══════════════════════ -->
+    <div class="clean-view" id="clean-view" hidden>
+
+        <header class="cv-header">
+            <div class="cv-header-inner">
+                <div class="cv-name-block">
+                    <h1 class="cv-name">Abhay Sengar</h1>
+                    <p class="cv-title">Hardware &amp; Embedded Systems Engineer</p>
+                </div>
+                <nav class="cv-nav">
+                    <a href="#cv-about" class="cv-nav-link">About</a>
+                    <a href="#cv-skills" class="cv-nav-link">Skills</a>
+                    <a href="#cv-projects" class="cv-nav-link">Projects</a>
+                    <a href="#cv-experience" class="cv-nav-link">Experience</a>
+                    <a href="#cv-contact" class="cv-nav-link cv-nav-cta">Contact</a>
+                    <button class="mode-toggle" id="mode-toggle-clean" title="Switch to terminal view">&#62;_ Terminal</button>
+                </nav>
+            </div>
+        </header>
+
+        <main class="cv-main">
+
+            <!-- About -->
+            <section class="cv-section" id="cv-about">
+                <h2 class="cv-section-title">About Me</h2>
+                <div class="cv-about-grid">
+                    <div class="cv-about-text">
+                        <p>I'm a Computer Engineering master's student who builds systems at the boundary of hardware and software — the engineering that makes chips, sensors, and AI work in the real world.</p>
+                        <p>Think of my work as: making computers faster at a hardware level, writing the low-level code that talks directly to chips, and deploying AI on tiny devices that don't need a cloud connection.</p>
+                        <div class="cv-status-badge">● Currently open to internships &amp; full-time roles</div>
+                    </div>
+                    <div class="cv-about-stats">
+                        <div class="cv-stat">
+                            <span class="cv-stat-num">5+</span>
+                            <span class="cv-stat-label">Projects Built</span>
+                        </div>
+                        <div class="cv-stat">
+                            <span class="cv-stat-num">M.S.</span>
+                            <span class="cv-stat-label">Computer Engineering</span>
+                        </div>
+                        <div class="cv-stat">
+                            <span class="cv-stat-num">45 FPS</span>
+                            <span class="cv-stat-label">Real-Time AI Vision</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills -->
+            <section class="cv-section" id="cv-skills">
+                <h2 class="cv-section-title">What I Know</h2>
+                <div class="cv-skill-groups">
+                    <div class="cv-skill-group">
+                        <h3 class="cv-skill-group-title">🔌 Hardware Design</h3>
+                        <p class="cv-skill-group-desc">Designing digital circuits and programming FPGAs — reprogrammable chips used in aerospace, finance, and telecom.</p>
+                        <div class="cv-tags">
+                            <span class="cv-tag">FPGA</span>
+                            <span class="cv-tag">SystemVerilog</span>
+                            <span class="cv-tag">Computer Architecture</span>
+                            <span class="cv-tag">PCB Design</span>
+                        </div>
+                    </div>
+                    <div class="cv-skill-group">
+                        <h3 class="cv-skill-group-title">💾 Firmware &amp; Embedded</h3>
+                        <p class="cv-skill-group-desc">Writing code that runs directly on microcontrollers — the brains inside every smart device, from medical monitors to car systems.</p>
+                        <div class="cv-tags">
+                            <span class="cv-tag">C / C++</span>
+                            <span class="cv-tag">ARM Cortex-M</span>
+                            <span class="cv-tag">FreeRTOS</span>
+                            <span class="cv-tag">Linux Kernel</span>
+                        </div>
+                    </div>
+                    <div class="cv-skill-group">
+                        <h3 class="cv-skill-group-title">🤖 AI on Edge Devices</h3>
+                        <p class="cv-skill-group-desc">Running machine learning models on small, low-power devices like cameras or drones — no cloud server required.</p>
+                        <div class="cv-tags">
+                            <span class="cv-tag">PyTorch</span>
+                            <span class="cv-tag">TensorRT</span>
+                            <span class="cv-tag">NVIDIA Jetson</span>
+                            <span class="cv-tag">Python</span>
+                        </div>
+                    </div>
+                    <div class="cv-skill-group">
+                        <h3 class="cv-skill-group-title">🔗 Boards &amp; Protocols</h3>
+                        <p class="cv-skill-group-desc">Hardware platforms and communication standards that connect chips and sensors together.</p>
+                        <div class="cv-tags">
+                            <span class="cv-tag">Raspberry Pi</span>
+                            <span class="cv-tag">STM32</span>
+                            <span class="cv-tag">ESP32</span>
+                            <span class="cv-tag">I2C · SPI · UART</span>
+                            <span class="cv-tag">CAN Bus</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects -->
+            <section class="cv-section" id="cv-projects">
+                <h2 class="cv-section-title">Projects</h2>
+                <div class="cv-project-grid">
+                    <div class="cv-project-card">
+                        <div class="cv-project-icon">⚙️</div>
+                        <h3 class="cv-project-name">Custom CPU from Scratch</h3>
+                        <p class="cv-project-plain">Built a working processor — the core of any computer — from scratch using hardware description code, then ran it on a real chip. Like building a calculator from logic gates.</p>
+                        <div class="cv-project-detail">5-stage RISC-V pipeline · Xilinx Artix-7 FPGA · 75 MHz</div>
+                    </div>
+                    <div class="cv-project-card">
+                        <div class="cv-project-icon">📡</div>
+                        <h3 class="cv-project-name">Real-Time Sensor Hub</h3>
+                        <p class="cv-project-plain">A device that collects data from multiple sensors simultaneously and sends it in real time — under 1 millisecond delay. Used in industrial and automotive monitoring.</p>
+                        <div class="cv-project-detail">FreeRTOS · STM32 ARM Cortex-M4 · CAN Bus · &lt;1 ms latency</div>
+                    </div>
+                    <div class="cv-project-card">
+                        <div class="cv-project-icon">🐧</div>
+                        <h3 class="cv-project-name">High-Speed Data Transfer Driver</h3>
+                        <p class="cv-project-plain">Wrote a software driver that lets a custom chip talk to a computer at 3.2 GB/s — fast enough to transfer a full HD movie every second.</p>
+                        <div class="cv-project-detail">Linux kernel module · PCIe Gen 3.0 · 3.2 GB/s throughput</div>
+                    </div>
+                    <div class="cv-project-card">
+                        <div class="cv-project-icon">🤖</div>
+                        <h3 class="cv-project-name">AI Vision on a Low-Power Device</h3>
+                        <p class="cv-project-plain">Got an object-detection AI running at 45 frames per second on a small NVIDIA board — using only 12 watts of power, about the same as an LED bulb.</p>
+                        <div class="cv-project-detail">YOLOv8 · TensorRT INT8 · NVIDIA Jetson Orin · 45 FPS @ 12 W</div>
+                    </div>
+                    <div class="cv-project-card">
+                        <div class="cv-project-icon">🍓</div>
+                        <h3 class="cv-project-name">Mini Computing Cluster</h3>
+                        <p class="cv-project-plain">Linked four Raspberry Pi computers into a small cluster to run parallel experiments — like a tiny version of a data center, built on a desk.</p>
+                        <div class="cv-project-detail">4× Raspberry Pi 4B · Ubuntu Server · NFS · MPI</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Experience -->
+            <section class="cv-section" id="cv-experience">
+                <h2 class="cv-section-title">Education &amp; Experience</h2>
+                <div class="cv-timeline">
+                    <div class="cv-timeline-item">
+                        <div class="cv-timeline-dot"></div>
+                        <div class="cv-timeline-content">
+                            <h3 class="cv-timeline-title">M.S. Computer Engineering</h3>
+                            <p class="cv-timeline-sub">Graduate Degree · In Progress</p>
+                            <p class="cv-timeline-desc">Specializing in embedded systems, digital design, and computer architecture. Coursework includes Advanced Computer Architecture, VLSI Design, Real-Time Embedded Systems, Parallel Computing, Hardware Security, and ML Hardware Acceleration.</p>
+                        </div>
+                    </div>
+                    <div class="cv-timeline-item">
+                        <div class="cv-timeline-dot"></div>
+                        <div class="cv-timeline-content">
+                            <h3 class="cv-timeline-title">Graduate Research &amp; Lab Assistant</h3>
+                            <p class="cv-timeline-sub">ECE Research Laboratory</p>
+                            <p class="cv-timeline-desc">Hands-on work with FPGA boards, firmware development, and lab equipment including oscilloscopes and logic analyzers. Prototyping and testing embedded systems in a research environment.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact -->
+            <section class="cv-section" id="cv-contact">
+                <h2 class="cv-section-title">Get In Touch</h2>
+                <p class="cv-contact-intro">I'm currently open to internship and full-time opportunities in embedded systems, hardware engineering, and edge computing. Feel free to reach out!</p>
+                <div class="cv-contact-links">
+                    <a href="https://www.linkedin.com/in/abhay-sengar2412/" target="_blank" rel="noopener" class="cv-contact-card">
+                        <span class="cv-contact-icon">💼</span>
+                        <span class="cv-contact-label">LinkedIn</span>
+                        <span class="cv-contact-val">abhay-sengar2412</span>
+                    </a>
+                    <a href="https://github.com/" target="_blank" rel="noopener" class="cv-contact-card">
+                        <span class="cv-contact-icon">🐙</span>
+                        <span class="cv-contact-label">GitHub</span>
+                        <span class="cv-contact-val">abhay-sengar</span>
+                    </a>
+                    <a href="mailto:apsengar@ncsu.edu" class="cv-contact-card">
+                        <span class="cv-contact-icon">✉️</span>
+                        <span class="cv-contact-label">Email</span>
+                        <span class="cv-contact-val">apsengar@ncsu.edu</span>
+                    </a>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
