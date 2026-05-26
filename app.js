@@ -18,12 +18,13 @@ const bootLines = [
   { text: '[    0.196]   ├── ARM Cortex-M subsystem                [  OK  ]', cls: 'boot-ok', delay: 70 },
   { text: '[    0.264]   ├── STM32 HAL / Cube IDE                  [  OK  ]', cls: 'boot-ok', delay: 70 },
   { text: '[    0.332]   ├── FreeRTOS scheduler                    [  OK  ]', cls: 'boot-ok', delay: 70 },
-  { text: '[    0.400]   ├── I2C / SPI / UART / CAN buses          [  OK  ]', cls: 'boot-ok', delay: 70 },
+  { text: '[    0.400]   ├── I2C / SPI / UART buses          [  OK  ]', cls: 'boot-ok', delay: 70 },
   { text: '[    0.468]   ├── Zigbee / BLE protocol stack            [  OK  ]', cls: 'boot-ok', delay: 70 },
   { text: '[    0.536]   └── MQTT / TCP networking                  [  OK  ]', cls: 'boot-ok', delay: 70 },
   { text: '[    0.604] Mounting /dev/nokia-firmware...', cls: 'boot-highlight', delay: 100 },
-  { text: '[    0.720] Loading Nokia optical firmware modules...', cls: 'boot-highlight', delay: 120 },
-  { text: '[    0.848] SHA-256 integrity verification               [PASS]', cls: 'boot-ok', delay: 80 },
+  { text: '[    0.672] Mounting /dev/digineous-controllers...', cls: 'boot-highlight', delay: 100 },
+  { text: '[    0.760] Loading firmware modules...', cls: 'boot-highlight', delay: 120 },
+  { text: '[    0.848] Image integrity verification               [PASS]', cls: 'boot-ok', delay: 80 },
   { text: '[    0.916] NC State kernel v3.65 loaded.', cls: 'boot-info', delay: 60 },
   { text: '[    0.984] VIT bootstrap v8.94 loaded.', cls: 'boot-info', delay: 60 },
   { text: '[    1.052] All systems nominal.', cls: 'boot-ok', delay: 80 },
@@ -141,7 +142,6 @@ if (!sessionStorage.getItem('booted')) {
     { t: '[    0.312002]', m: 'mqtt-client: broker connection pool ready', c: 'log-ok' },
     { t: '[    0.324100]', m: 'tcp: hash tables configured (established 8192)', c: 'log-dim' },
     { t: '[    0.338230]', m: 'nokia-fw: optical module driver v2.1', c: 'log-info' },
-    { t: '[    0.352001]', m: 'sha256: AMCU integrity check [PASS]', c: 'log-ok' },
     { t: '[    0.364300]', m: 'adc: 12-bit SAR converter initialized', c: 'log-ok' },
     { t: '[    0.378002]', m: 'dma: scatter-gather engine ready', c: 'log-ok' },
     { t: '[    0.392100]', m: 'pwm: timer channel 0-3 configured', c: 'log-dim' },
@@ -408,16 +408,17 @@ const COMMANDS = {
   <div class="kv-row"><span class="kv-key">Name</span><span class="kv-value green bold">Abhay Pratap Singh Sengar</span></div>
   <div class="kv-row"><span class="kv-key">Seeking</span><span class="kv-value">Firmware & Embedded Systems Engineer</span></div>
   <div class="kv-row"><span class="kv-key">Past Experience</span><span class="kv-value cyan">Firmware Dev Co-op @ Nokia</span></div>
-  <div class="kv-row"><span class="kv-key">Masters</span><span class="kv-value">M.S. Computer Engineering — NC State (3.65 GPA)</span></div>
-  <div class="kv-row"><span class="kv-key">Bachelors</span><span class="kv-value">B.Tech EEE — VIT Vellore (8.94/10)</span></div>
+  <div class="kv-row"><span class="kv-key">Masters</span><span class="kv-value">M.S. Computer Engineering — NC State</span></div>
+  <div class="kv-row"><span class="kv-key">Bachelors</span><span class="kv-value">B.Tech EEE — VIT Vellore</span></div>
   <div class="kv-row"><span class="kv-key">Location</span><span class="kv-value">San Jose, CA</span></div>
-  <div class="kv-row"><span class="kv-key">Focus</span><span class="kv-value">Firmware · RTOS · Embedded C/C++ · IoT · ARM</span></div>
+  <div class="kv-row"><span class="kv-key">Focus</span><span class="kv-value">Firmware Design· Embedded System · IoT</span></div>
   <div class="kv-row"><span class="kv-key">Status</span><span class="kv-value"><span class="green">● Open to full-time roles</span></span></div>
   <br>
   <div class="out-dim">
-    Firmware & embedded systems engineer with production experience at Nokia designing
+    Firmware & embedded systems engineer with experience at Nokia designing
     boot-time integrity verification, C++ driver APIs, and build infrastructure for
-    optical firmware. Skilled across the full hardware-software stack — from bare-metal
+    optical firmware, and at Digineous Technologies developing low-level
+    embedded control units, sensor networks and IoT integrations. Skilled across the full hardware-software stack from bare-metal
     firmware on ARM Cortex-M and FreeRTOS scheduling to IoT sensor networks with
     Zigbee/BLE and MQTT-based cloud pipelines.
   </div>
@@ -428,7 +429,7 @@ const COMMANDS = {
 <div>
   <div class="out-h">Languages</div>
   <div class="progress-row"><span class="progress-label">C / Embedded C</span>${bar(95)}<span class="bar-pct">95%</span></div>
-  <div class="progress-row"><span class="progress-label">C++</span>${bar(85)}<span class="bar-pct">85%</span></div>
+  <div class="progress-row"><span class="progress-label">C++</span>${bar(90)}<span class="bar-pct">90%</span></div>
   <div class="progress-row"><span class="progress-label">Python</span>${bar(82, 'var(--bright-blue)')}<span class="bar-pct">82%</span></div>
   <div class="progress-row"><span class="progress-label">Bash / Shell</span>${bar(78, 'var(--orange)')}<span class="bar-pct">78%</span></div>
 
@@ -472,8 +473,7 @@ const COMMANDS = {
 <div class="out-pre">  <span class="project-link" onclick="openProject('care-link')">care-link/</span>           <span class="dim">— IoT fall detection system (multi-node)</span>
 </div>
 
-<div class="project-category">ASIC, FPGA & Microarchitecture</div>
-<div class="out-pre">  <span class="project-link" onclick="openProject('attention-hw')">attention-hw/</span>        <span class="dim">— Self-Attention hardware accelerator (SystemVerilog)</span>
+<div class="project-category">Microarchitecture</div>
   <span class="project-link" onclick="openProject('ooo-processor')">ooo-processor/</span>       <span class="dim">— Out-of-Order superscalar processor simulator</span>
 </div>
 
@@ -502,20 +502,22 @@ const COMMANDS = {
 <div class="project-card">
   <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
   <div class="project-title">FreeRTOS Scheduling Algorithms on ARM Cortex-M0</div>
-  <div class="project-desc">
-    Implemented Rate-Monotonic and Earliest Deadline First scheduling on STM32F091RC by
-    modifying FreeRTOS kernel internals including the Task Control Block, ready-list, and
-    context-switch routine for deadline-aware scheduling.
-  </div>
-  <div class="project-desc">
-    Validated RM schedulability (U=0.494, hyper-period=12s) via fixed-point RTA and 100Hz UART
-    tick traces. Confirmed WCRTs (R₁=10, R₂=15, R₃=47, R₄=162 ticks) and reproduced deadline
-    violations under overload (U=1.20).
-  </div>
-  <div class="project-desc">
-    Engineered a mixed real-time workload achieving 55.8% periodic utilization, integrating
-    interrupt-driven sporadic task activation via GPIO EXTI on PC13 with software debouncing.
-  </div>
+  <ul class="project-bullets">
+    <li>
+      Implemented Rate-Monotonic and Earliest Deadline First scheduling on STM32F091RC by
+      modifying FreeRTOS kernel internals including the Task Control Block, ready-list, and
+      context-switch routine for deadline-aware scheduling.
+    </li>
+    <li>
+      Validated RM schedulability (U=0.494, hyper-period=12s) via fixed-point RTA and 100Hz UART
+      tick traces. Confirmed WCRTs (R₁=10, R₂=15, R₃=47, R₄=162 ticks) and reproduced deadline
+      violations under overload (U=1.20).
+    </li>
+    <li>
+      Engineered a mixed real-time workload achieving 55.8% periodic utilization, integrating
+      interrupt-driven sporadic task activation via GPIO EXTI on PC13 with software debouncing.
+    </li>
+  </ul>
   <div class="project-meta">
     <div>Stack: <span>C · FreeRTOS · ARM Cortex-M0 · UART · GPIO EXTI</span></div>
     <div>MCU: <span>STM32F091RC</span></div>
@@ -528,20 +530,22 @@ const COMMANDS = {
 <div class="project-card">
   <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
   <div class="project-title">RTOS-Based Multithreaded LED Control & Fault Management</div>
-  <div class="project-desc">
-    Developed a real-time embedded system on the Cortex-M0+ based KL25Z, integrating a buck
-    converter, LCD, and Analog Discovery 2 to measure LED current, adjust brightness based on
-    tilt, and update the LCD in real-time.
-  </div>
-  <div class="project-desc">
-    Integrated RTOS-based synchronization for stable waveform display and mutex-protected
-    LCD updates with 125 µs acquisition time and 193 critical sections averaging 186 µs duration.
-  </div>
-  <div class="project-desc">
-    Engineered a 10-fault management system addressing stack overflow, disabled IRQs, PWM
-    timer corruption, and mutex deadlock using a 1 kHz watchdog timer with 1024-count overflow,
-    achieving fault detection within 41.667 µs and automatic recovery within 1 second.
-  </div>
+  <ul class="project-bullets">
+    <li>
+      Developed a real-time embedded system on the Cortex-M0+ based KL25Z, integrating a buck
+      converter, LCD, and Analog Discovery 2 to measure LED current, adjust brightness based on
+      tilt, and update the LCD in real-time.
+    </li>
+    <li>
+      Integrated RTOS-based synchronization for stable waveform display and mutex-protected
+      LCD updates with 125 µs acquisition time and 193 critical sections averaging 186 µs duration.
+    </li>
+    <li>
+      Engineered a 10-fault management system addressing stack overflow, disabled IRQs, PWM
+      timer corruption, and mutex deadlock using a 1 kHz watchdog timer with 1024-count overflow,
+      achieving fault detection within 41.667 µs and automatic recovery within 1 second.
+    </li>
+  </ul>
   <div class="project-meta">
     <div>Stack: <span>C · RTOS · KL25Z · ST7789 LCD · Buck Converter</span></div>
     <div>MCU: <span>ARM Cortex-M0+ (KL25Z)</span></div>
@@ -554,20 +558,22 @@ const COMMANDS = {
 <div class="project-card">
   <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
   <div class="project-title">Real-Time GPIO Input/Output Response Analysis</div>
-  <div class="project-desc">
-    Analyzed GPIO event detection on Raspberry Pi 4B by comparing polling and event-driven
-    methods (gpiomon, memory-mapped I/O, and kernel interrupts with high-resolution timers)
-    to benchmark latency and optimize real-time performance.
-  </div>
-  <div class="project-desc">
-    Achieved response times of 98.23 ns (polling), 4.369 µs (kernel interrupts), and 2.003 ms
-    (user-space gpiomon), demonstrating trade-offs between high-speed detection, CPU utilization,
-    and system responsiveness.
-  </div>
-  <div class="project-desc">
-    Polling-based methods reach 100% CPU usage, while event-driven approaches maintained
-    efficiency at less than 8%, highlighting scalability for embedded real-time systems.
-  </div>
+  <ul class="project-bullets">
+    <li>
+      Analyzed GPIO event detection on Raspberry Pi 4B by comparing polling and event-driven
+      methods (gpiomon, memory-mapped I/O, and kernel interrupts with high-resolution timers)
+      to benchmark latency and optimize real-time performance.
+    </li>
+    <li>
+      Achieved response times of 98.23 ns (polling), 4.369 µs (kernel interrupts), and 2.003 ms
+      (user-space gpiomon), demonstrating trade-offs between high-speed detection, CPU utilization,
+      and system responsiveness.
+    </li>
+    <li>
+      Polling-based methods reach 100% CPU usage, while event-driven approaches maintained
+      efficiency at less than 8%, highlighting scalability for embedded real-time systems.
+    </li>
+  </ul>
   <div class="project-meta">
     <div>Stack: <span>C · Linux · RPi 4B · GPIO · Kernel Interrupts</span></div>
     <div>Best Latency: <span>98.23 ns (polling)</span></div>
@@ -580,19 +586,21 @@ const COMMANDS = {
 <div class="project-card">
   <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
   <div class="project-title">Image Stabilization — Scalar & ARM NEON SIMD Vectorization</div>
-  <div class="project-desc">
-    Utilized Raspberry Pi 4 Model B with ARM Cortex-A72 at 1.5 GHz, achieving an initial
-    baseline execution time of ~21 ms/frame for real-time YUV image stabilization tasks.
-  </div>
-  <div class="project-desc">
-    Enhanced processing performance by 65%, reducing frame execution time from 21 ms to 7.5 ms
-    through scalar optimizations — removing redundant memory operations, restructuring loops
-    for cache efficiency, and simplifying control flow.
-  </div>
-  <div class="project-desc">
-    Achieved a 75% performance boost by applying ARM NEON SIMD vectorization, using techniques
-    like parallelized color matching and bulk pixel processing, reducing runtime to ~1.9 ms/frame.
-  </div>
+  <ul class="project-bullets">
+    <li>
+      Utilized Raspberry Pi 4 Model B with ARM Cortex-A72 at 1.5 GHz, achieving an initial
+      baseline execution time of ~21 ms/frame for real-time YUV image stabilization tasks.
+    </li>
+    <li>
+      Enhanced processing performance by 65%, reducing frame execution time from 21 ms to 7.5 ms
+      through scalar optimizations — removing redundant memory operations, restructuring loops
+      for cache efficiency, and simplifying control flow.
+    </li>
+    <li>
+      Achieved a 75% performance boost by applying ARM NEON SIMD vectorization, using techniques
+      like parallelized color matching and bulk pixel processing, reducing runtime to ~1.9 ms/frame.
+    </li>
+  </ul>
   <div class="project-meta">
     <div>Stack: <span>C · ARM NEON SIMD · RPi 4B · Cortex-A72</span></div>
     <div>Speedup: <span>21 ms → 1.9 ms/frame (11× faster)</span></div>
@@ -605,21 +613,23 @@ const COMMANDS = {
 <div class="project-card">
   <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
   <div class="project-title">Care-Link IoT Fall Detection System</div>
-  <div class="project-desc">
-    Designed a multi-node IoT system across heterogeneous hardware — NodeMCU ESP8266
-    for real-time heart rate monitoring at 100 Hz using MAX3010x pulse sensor, and Arduino Uno
-    for sound amplitude detection at 150 Hz, transmitting synchronized sensor streams.
-  </div>
-  <div class="project-desc">
-    Developed a Raspberry Pi-based data collection and MQTT publish pipeline in Python to
-    aggregate multi-sensor data into structured CSV datasets for downstream ML model training
-    and real-time inference through a subscriber-based architecture.
-  </div>
-  <div class="project-desc">
-    Built an end-to-end ML pipeline integrating IMU training data with multi-sensor inputs,
-    demonstrating a complete edge-to-cloud IoT workflow across embedded, single-board, and
-    laptop computing tiers.
-  </div>
+  <ul class="project-bullets">
+    <li>
+      Designed a multi-node IoT system across heterogeneous hardware — NodeMCU ESP8266
+      for real-time heart rate monitoring at 100 Hz using MAX3010x pulse sensor, and Arduino Uno
+      for sound amplitude detection at 150 Hz, transmitting synchronized sensor streams.
+    </li>
+    <li>
+      Developed a Raspberry Pi-based data collection and MQTT publish pipeline in Python to
+      aggregate multi-sensor data into structured CSV datasets for downstream ML model training
+      and real-time inference through a subscriber-based architecture.
+    </li>
+    <li>
+      Built an end-to-end ML pipeline integrating IMU training data with multi-sensor inputs,
+      demonstrating a complete edge-to-cloud IoT workflow across embedded, single-board, and
+      laptop computing tiers.
+    </li>
+  </ul>
   <div class="project-meta">
     <div>Stack: <span>Python · MQTT · ESP8266 · Arduino · RPi 4B</span></div>
     <div>Sensors: <span>MAX3010x (100 Hz) · Sound (150 Hz) · IMU</span></div>
@@ -632,21 +642,23 @@ const COMMANDS = {
 <div class="project-card">
   <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
   <div class="project-title">Self-Attention Hardware Accelerator</div>
-  <div class="project-desc">
-    Designed and implemented a Transformer-based hardware module in SystemVerilog to compute
-    scaled dot-product attention, including query, key, value, score, and self-attention matrices,
-    leveraging SRAM for input, intermediate, and output storage.
-  </div>
-  <div class="project-desc">
-    Developed an efficient matrix multiplication engine for QK&#x1D40; and S×V computations with
-    optimized memory mapping and control signals for seamless SRAM interfacing, adhering to
-    timing constraints.
-  </div>
-  <div class="project-desc">
-    Verified and synthesized using industry-standard tools — simulation log validation and
-    synthesis compliance prevented latches and combinational feedback, achieving 9,215.5 µm²
-    area, 6.8 ns clock period, and 2850 cycles.
-  </div>
+  <ul class="project-bullets">
+    <li>
+      Designed and implemented a Transformer-based hardware module in SystemVerilog to compute
+      scaled dot-product attention, including query, key, value, score, and self-attention matrices,
+      leveraging SRAM for input, intermediate, and output storage.
+    </li>
+    <li>
+      Developed an efficient matrix multiplication engine for QK&#x1D40; and S×V computations with
+      optimized memory mapping and control signals for seamless SRAM interfacing, adhering to
+      timing constraints.
+    </li>
+    <li>
+      Verified and synthesized using industry-standard tools — simulation log validation and
+      synthesis compliance prevented latches and combinational feedback, achieving 9,215.5 µm²
+      area, 6.8 ns clock period, and 2850 cycles.
+    </li>
+  </ul>
   <div class="project-meta">
     <div>Stack: <span>SystemVerilog · SRAM · Synthesis Tools</span></div>
     <div>Area: <span>9,215.5 µm²</span></div>
@@ -659,19 +671,21 @@ const COMMANDS = {
 <div class="project-card">
   <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
   <div class="project-title">Out-of-Order Superscalar Processor Simulator</div>
-  <div class="project-desc">
-    Developed a simulator capable of fetching and issuing N instructions per cycle, incorporating
-    dynamic scheduling with Issue Queue (IQ), Reorder Buffer (ROB), and Rename Map Table (RMT).
-  </div>
-  <div class="project-desc">
-    Modeled pipeline stages (Fetch, Decode, Rename, Register Read, Execute, Writeback, Retire)
-    with accurate timing tracking for each instruction, and conducted experiments to measure
-    Instructions Per Cycle (IPC) across varying configurations.
-  </div>
-  <div class="project-desc">
-    Ensured simulator outputs matched trace files, validating the correctness of the dynamic
-    instruction scheduling mechanism.
-  </div>
+  <ul class="project-bullets">
+    <li>
+      Developed a simulator capable of fetching and issuing N instructions per cycle, incorporating
+      dynamic scheduling with Issue Queue (IQ), Reorder Buffer (ROB), and Rename Map Table (RMT).
+    </li>
+    <li>
+      Modeled pipeline stages (Fetch, Decode, Rename, Register Read, Execute, Writeback, Retire)
+      with accurate timing tracking for each instruction, and conducted experiments to measure
+      Instructions Per Cycle (IPC) across varying configurations.
+    </li>
+    <li>
+      Ensured simulator outputs matched trace files, validating the correctness of the dynamic
+      instruction scheduling mechanism.
+    </li>
+  </ul>
   <div class="project-meta">
     <div>Stack: <span>C++ · Microarchitecture · Dynamic Scheduling</span></div>
     <div>Features: <span>IQ · ROB · RMT · N-wide fetch/issue</span></div>
@@ -684,18 +698,20 @@ const COMMANDS = {
 <div class="project-card">
   <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
   <div class="project-title">Matrix Reloaded — DSL Compiler</div>
-  <div class="project-desc">
-    Designed a domain-specific language compiler using Flex/Bison and LLVM IR to support matrix
-    operations like inverse, determinant, and arithmetic operations.
-  </div>
-  <div class="project-desc">
-    Refactored codebase to modularize repetitive IR generation logic and integrated matrix support
-    via Eigen, reducing static instructions to 243 and achieving top 3 performance in the class.
-  </div>
-  <div class="project-desc">
-    Demonstrated low-level systems skills through debugging, IR verification, and function
-    prototype generation using LLVM APIs.
-  </div>
+  <ul class="project-bullets">
+    <li>
+      Designed a domain-specific language compiler using Flex/Bison and LLVM IR to support matrix
+      operations like inverse, determinant, and arithmetic operations.
+    </li>
+    <li>
+      Refactored codebase to modularize repetitive IR generation logic and integrated matrix support
+      via Eigen, reducing static instructions to 243 and achieving top 3 performance in the class.
+    </li>
+    <li>
+      Demonstrated low-level systems skills through debugging, IR verification, and function
+      prototype generation using LLVM APIs.
+    </li>
+  </ul>
   <div class="project-meta">
     <div>Stack: <span>C++ · Flex · Bison · LLVM IR · Eigen</span></div>
     <div>Static Instrs: <span>243 (optimized)</span></div>
@@ -708,21 +724,23 @@ const COMMANDS = {
 <div class="project-card">
   <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
   <div class="project-title">Xinu OS Kernel Extensions</div>
-  <div class="project-desc">
-    Extended the Xinu OS kernel by implementing cascading termination with a user_process PCB
-    flag, redesigning kill() to recursively terminate child processes, and developing a Unix-style
-    fork() system call that duplicates parent stack frames and execution context.
-  </div>
-  <div class="project-desc">
-    Implemented Lottery Scheduling by modifying the scheduler to allocate CPU time proportional
-    to ticket count with PID-based tie-breaking, and Multi-Level Feedback Queue (MLFQ) scheduling
-    with configurable priority levels, doubling time allotments per level, and periodic priority boost.
-  </div>
-  <div class="project-desc">
-    Designed and validated 15+ process test suites covering cascading termination, fork behavior,
-    and scheduler fairness — conducting turnaround time ratio analysis (F = T₁/T₂) across
-    increasing workloads to verify probabilistic fairness convergence.
-  </div>
+  <ul class="project-bullets">
+    <li>
+      Extended the Xinu OS kernel by implementing cascading termination with a user_process PCB
+      flag, redesigning kill() to recursively terminate child processes, and developing a Unix-style
+      fork() system call that duplicates parent stack frames and execution context.
+    </li>
+    <li>
+      Implemented Lottery Scheduling by modifying the scheduler to allocate CPU time proportional
+      to ticket count with PID-based tie-breaking, and Multi-Level Feedback Queue (MLFQ) scheduling
+      with configurable priority levels, doubling time allotments per level, and periodic priority boost.
+    </li>
+    <li>
+      Designed and validated 15+ process test suites covering cascading termination, fork behavior,
+      and scheduler fairness — conducting turnaround time ratio analysis (F = T₁/T₂) across
+      increasing workloads to verify probabilistic fairness convergence.
+    </li>
+  </ul>
   <div class="project-meta">
     <div>Stack: <span>C · Xinu OS · ARM · Kernel Development</span></div>
     <div>Features: <span>fork() · Lottery · MLFQ Scheduling</span></div>
@@ -735,21 +753,23 @@ const COMMANDS = {
 <div class="project-card">
   <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
   <div class="project-title">MPPT DC-DC Converter for Photovoltaic Systems</div>
-  <div class="project-desc">
-    Designed and developed a 1.5 kW photovoltaic MPPT system using a boost DC-DC converter,
-    modeling the power stage in MATLAB and achieving ~96.5% tracking efficiency with the
-    Incremental Conductance (IC) algorithm during hardware testing.
-  </div>
-  <div class="project-desc">
-    Implemented Arduino-based MPPT firmware with switchable IC and P&amp;O algorithms, validated
-    across 100–1000 W/m² irradiance and 20–50 °C, with IC demonstrating faster MPP convergence
-    and ~6% higher efficiency than P&amp;O.
-  </div>
-  <div class="project-desc">
-    Engineered a 20 kHz boost converter with analytically sized 190 µH inductor and ≥80 µF
-    capacitor to limit ripple; specified IGBT, diode, and TLP250 gate driver, verified &lt;9 V ripple
-    and 30 A peak current.
-  </div>
+  <ul class="project-bullets">
+    <li>
+      Designed and developed a 1.5 kW photovoltaic MPPT system using a boost DC-DC converter,
+      modeling the power stage in MATLAB and achieving ~96.5% tracking efficiency with the
+      Incremental Conductance (IC) algorithm during hardware testing.
+    </li>
+    <li>
+      Implemented Arduino-based MPPT firmware with switchable IC and P&amp;O algorithms, validated
+      across 100–1000 W/m² irradiance and 20–50 °C, with IC demonstrating faster MPP convergence
+      and ~6% higher efficiency than P&amp;O.
+    </li>
+    <li>
+      Engineered a 20 kHz boost converter with analytically sized 190 µH inductor and ≥80 µF
+      capacitor to limit ripple; specified IGBT, diode, and TLP250 gate driver, verified &lt;9 V ripple
+      and 30 A peak current.
+    </li>
+  </ul>
   <div class="project-meta">
     <div>Stack: <span>C · Arduino · MATLAB · Power Electronics</span></div>
     <div>Power: <span>1.5 kW · 96.5% tracking efficiency</span></div>
