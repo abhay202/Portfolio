@@ -219,6 +219,7 @@ document.querySelectorAll('#top-nav a[data-section]').forEach(link => {
       skills: 'cat skills.txt',
       projects: 'ls projects/',
       experience: 'cat experience.md',
+      education: 'cat education.md',
       contact: 'cat contact.txt'
     };
     document.querySelectorAll('#top-nav a').forEach(a => a.classList.remove('active'));
@@ -278,7 +279,7 @@ function appendBlock(htmlContent, cmdLabel) {
   block.innerHTML = `
       <div class="echo-line">
         <span class="prompt">
-          <span class="user">abhay</span><span class="at">@</span><span class="host">portfolio</span><span class="colon">:</span><span class="path">~</span><span class="dollar">$</span>
+          <span class="user">abhay</span><span class="at">@</span><span class="host">abhayportfolio</span><span class="colon">:</span><span class="path">~</span><span class="dollar">$</span>
         </span>
         <span class="echo-cmd">${escHtml(cmdLabel)}</span>
       </div>
@@ -345,7 +346,7 @@ const COMMANDS = {
       └─┴──┴──┴──┴─┘
   </pre>
   <div class="neofetch-info">
-    <div><span class="green bold">abhay</span><span class="dim">@</span><span class="blue bold">portfolio</span></div>
+    <div><span class="green bold">abhay</span><span class="dim">@</span><span class="blue bold">abhayportfolio</span></div>
     <div class="neofetch-separator">────────────────────────</div>
     <div><span class="yellow bold">OS</span><span class="dim">:</span> Firmware Engineer LTS</div>
     <div><span class="yellow bold">Host</span><span class="dim">:</span> Nokia (Firmware Dev Co-op)</div>
@@ -428,7 +429,7 @@ const COMMANDS = {
 
   'ls projects/': () => `
 <div>
-<div class="out-pre"><span class="dim">total 10</span></div>
+<div class="out-pre"><span class="dim">total 10</span>  <button class="shortcut" style="margin-left:8px;font-size:0.72rem;padding:2px 10px;" onclick="runCmd('cat projects/all')">view all</button></div>
 
 <div class="project-category">Embedded Systems & RTOS</div>
 <div class="out-pre">  <span class="project-link" onclick="openProject('freertos')">freertos/</span>            <span class="dim">— RTOS scheduling (RM & EDF) on ARM Cortex-M0</span>
@@ -457,6 +458,12 @@ const COMMANDS = {
 
 <div class="dim" style="margin-top:8px">Click a project name or type <span class="cyan">cat projects/&lt;name&gt;</span> to view details.</div>
 </div>`,
+
+  'cat projects/all': () => [
+    'freertos', 'rtos-fault', 'gpio-analysis', 'img-stab',
+    'care-link', 'attention-hw', 'ooo-processor',
+    'matrix-reloaded', 'xinu', 'mppt'
+  ].map(name => COMMANDS[`cat projects/${name}`]()).join(''),
 
   /* ═══ PROJECT DETAILS ═══════════════════════════════════ */
 
@@ -714,7 +721,7 @@ const COMMANDS = {
 
   'cat experience.md': () => `
 <div>
-  <div class="out-h">Work Experience</div>
+  <div class="out-h">💼  Work Experience</div>
 
   <div class="exp-card">
     <div class="exp-header">
@@ -747,13 +754,31 @@ const COMMANDS = {
       <li>Established gateway communication between embedded hardware and cloud using Zigbee protocol, improving data transmission efficiency by 40% and implementing machine fault alert systems for reduced downtime.</li>
     </ul>
   </div>
+  <div class="exp-card">
+    <div class="exp-header">
+      <div>
+        <span class="exp-title">Research Intern</span>
+        <span class="exp-company"> — BARC (Bhabha Atomic Research Centre)</span>
+      </div>
+      <span class="exp-date">Dec 2022 – May 2023</span>
+    </div>
+    <div class="exp-location">Mumbai, Maharashtra, India · On-site</div>
+    <ul class="exp-bullets">
+      <li>Designed a PID-controlled trigger-pulse PCB using an ATmega328, integrating with SCR configurations in a water-cooled 12-pulse rectifier system and achieving a 20% reduction in energy consumption across installed rectifiers.</li>
+      <li>Led end-to-end testing and validation of battery unit circuits, researching and deploying strategies to minimize energy usage in rectifier units — resulting in measurable performance gains and strict adherence to quality standards.</li>
+    </ul>
+  </div>
+  <div class="dim" style="margin-top:10px">Run <span class="cyan">cat education.md</span> to view academic background.</div>
+</div>`,
 
-  <div class="out-h" style="margin-top:16px">Education</div>
+  'cat education.md': () => `
+<div>
+  <div class="out-h"> Education</div>
 
   <div class="edu-card">
     <div class="edu-header">
       <span class="edu-school">North Carolina State University</span>
-      <span class="edu-date">Aug 2024 – May 2026</span>
+      <span class="edu-date">Aug 2024 -  May 2026</span>
     </div>
     <div class="edu-degree">Master of Science, Computer Engineering</div>
     <div class="edu-gpa">GPA: 3.65 / 4.00</div>
@@ -762,11 +787,24 @@ const COMMANDS = {
   <div class="edu-card">
     <div class="edu-header">
       <span class="edu-school">Vellore Institute of Technology</span>
-      <span class="edu-date">Jul 2019 – Jul 2023</span>
+      <span class="edu-date">Jul 2019 - Jul 2023</span>
     </div>
     <div class="edu-degree">B.Tech, Electrical and Electronics Engineering</div>
     <div class="edu-gpa">GPA: 8.94 / 10.00</div>
   </div>
+
+  <div class="out-h" style="margin-top:14px"> Relevant Coursework</div>
+  <div class="chips">
+    <span class="chip">Advanced Computer Architecture</span>
+    <span class="chip">VLSI Design</span>
+    <span class="chip">Digital System Design</span>
+    <span class="chip">Real-Time Embedded Systems</span>
+    <span class="chip">Hardware Security</span>
+    <span class="chip">Compiler Optimization</span>
+    <span class="chip">Operating Systems</span>
+    <span class="chip">Power Electronics</span>
+  </div>
+  <div class="dim" style="margin-top:10px">Run <span class="cyan">cat experience.md</span> to view work history.</div>
 </div>`,
 
   'cat contact.txt': () => `
