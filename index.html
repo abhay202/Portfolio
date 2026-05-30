@@ -42,9 +42,8 @@
                     <li><a href="#" data-section="projects">projects</a></li>
                     <li><a href="#" data-section="skills">skills</a></li>
                     <li class="right"><a href="#" data-section="contact">contact</a></li>
-                    <li class="right"><a href="#" data-section="help">help</a></li>
                     <li class="right resume-nav-item">
-                        <a href="https://drive.google.com/file/d/1tZB_ZGNJsT-vwNueN9XpdHYc6DjoxmSL/view?usp=drive_link"
+                        <a href="https://drive.google.com/file/d/1RK7bzeZ35EcRSQBwcebcvsciivsyWaA0/view?usp=drive_link"
                             target="_blank" rel="noopener" class="resume-btn">
                             <span class="resume-icon">↓</span> resume
                         </a>
@@ -110,7 +109,7 @@
                         <button class="shortcut" data-cmd="ls projects/">projects</button>
                         <button class="shortcut" data-cmd="cat skills.md">skills</button>
                         <button class="shortcut" data-cmd="cat contact.md">contact</button>
-                        <button class="shortcut" data-cmd="play">play shooter</button>
+                        <!--<button class="shortcut" data-cmd="play">play shooter</button>-->
                         <button class="shortcut" data-cmd="help">help</button>
                     </span>
                 </div>
@@ -130,18 +129,55 @@
 
             <!-- ── Contact Me Section ────────────────────── -->
             <div id="contact-me-section"
-                style="margin-top: 40px; margin-bottom: 40px; text-align: center; border-top: 1px solid var(--bg3); padding-top: 40px; animation: fadeIn 0.8s ease 0.6s both;">
-                <h2 style="font-size: 1.5rem; color: var(--bright-green); margin-bottom: 12px; font-weight: 700;">&gt;
+                style="margin-top: 40px; margin-bottom: 40px; border-top: 1px solid var(--bg3); padding-top: 40px; animation: fadeIn 0.8s ease 0.6s both;">
+                <h2
+                    style="font-size: 1.5rem; color: var(--bright-green); margin-bottom: 12px; font-weight: 700; text-align: center;">
+                    &gt;
                     Get In Touch</h2>
                 <p class="dim"
-                    style="font-size: 0.9rem; margin-bottom: 24px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-                    Have an interesting project, job opportunity, or just want to connect? My inbox is always open. Feel
-                    free to shoot me an email!
+                    style="font-size: 0.9rem; margin-bottom: 28px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6; text-align: center;">
+                    Have an interesting project, job opportunity, or just want to connect? Drop a message below.
                 </p>
-                <a href="mailto:apsengar@ncsu.edu" class="resume-btn"
-                    style="display: inline-flex !important; align-items: center; justify-content: center; gap: 8px; padding: 12px 28px !important; margin: 0 auto; max-width: fit-content; text-transform: uppercase;">
-                    <span class="resume-icon">✉</span> Contact Me
-                </a>
+
+                <form id="contact-form" action="https://formsubmit.co/apsengar@ncsu.edu" method="POST"
+                    style="max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px;">
+
+                    <!-- Honeypot anti-spam -->
+                    <input type="text" name="_honey" style="display:none">
+                    <!-- Disable captcha -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <!-- Custom subject -->
+                    <input type="hidden" name="_subject" value="Portfolio Contact — New Message">
+                    <!-- Stay on page after submit -->
+                    <input type="hidden" name="_next" value="about:blank">
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                        <div class="form-field">
+                            <label class="form-label" for="contact-name">Name</label>
+                            <input class="form-input" id="contact-name" type="text" name="name" placeholder="your name"
+                                required autocomplete="off" spellcheck="false">
+                        </div>
+                        <div class="form-field">
+                            <label class="form-label" for="contact-email">Email</label>
+                            <input class="form-input" id="contact-email" type="email" name="email"
+                                placeholder="you@example.com" required autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label class="form-label" for="contact-message">Message</label>
+                        <textarea class="form-input" id="contact-message" name="message"
+                            placeholder="Hey Abhay, I wanted to reach out about..." rows="5" required
+                            spellcheck="false"></textarea>
+                    </div>
+
+                    <button type="submit" id="contact-submit" class="form-submit-btn">
+                        <span id="submit-label"><span style="margin-right:6px;">✉</span> send message</span>
+                    </button>
+                </form>
+
+                <!-- Success / error feedback -->
+                <div id="contact-feedback" style="display:none; text-align:center; margin-top:18px;"></div>
             </div>
 
             <!-- ── Footer ───────────────────────────────── -->
@@ -150,7 +186,6 @@
 
         </div>
     </div>
-
     <script src="app.js"></script>
 </body>
 

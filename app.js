@@ -460,7 +460,7 @@ const COMMANDS = {
 
   'ls projects/': () => `
 <div>
-<div class="out-pre"><span class="dim">total 10</span>  <button class="shortcut" style="margin-left:8px;font-size:0.72rem;padding:2px 10px;" onclick="runCmd('cat projects/all')">view all</button></div>
+<div class="out-pre"><span class="dim">total 11</span>  <button class="shortcut" style="margin-left:8px;font-size:0.72rem;padding:2px 10px;" onclick="runCmd('cat projects/all')">view all</button></div>
 
 <div class="project-category">Embedded Systems & RTOS</div>
 <div class="out-pre">  <span class="project-link" onclick="openProject('freertos')">freertos/</span>            <span class="dim">— RTOS scheduling (RM & EDF) on ARM Cortex-M0</span>
@@ -469,17 +469,19 @@ const COMMANDS = {
   <span class="project-link" onclick="openProject('img-stab')">img-stab/</span>            <span class="dim">— Image stabilization with ARM NEON SIMD</span>
 </div>
 
-<div class="project-category">IoT & Sensor Networks</div>
-<div class="out-pre">  <span class="project-link" onclick="openProject('care-link')">care-link/</span>           <span class="dim">— IoT fall detection system (multi-node)</span>
-</div>
-
 <div class="project-category">Microarchitecture</div>
-  <span class="project-link" onclick="openProject('ooo-processor')">ooo-processor/</span>       <span class="dim">— Out-of-Order superscalar processor simulator</span>
+<div class="out-pre">  <span class="project-link" onclick="openProject('cache-sim')">cache-sim/</span>           <span class="dim">— Cache & Stream-Buffer Prefetch Simulator</span>
+  <span class="project-link" onclick="openProject('branch-predictor')">branch-predictor/</span>    <span class="dim">— Configurable branch predictor simulator in C++</span>
+  <span class="project-link" onclick="openProject('ooo-processor')">ooo-processor/</span>       <span class="dim">— 9-stage cycle-accurate out-of-order processor simulator</span>
 </div>
 
 <div class="project-category">Compiler & Operating Systems</div>
 <div class="out-pre">  <span class="project-link" onclick="openProject('matrix-reloaded')">matrix-reloaded/</span>     <span class="dim">— DSL compiler with Flex/Bison & LLVM IR</span>
   <span class="project-link" onclick="openProject('xinu')">xinu/</span>                <span class="dim">— Xinu OS kernel extensions (fork, schedulers)</span>
+</div>
+
+<div class="project-category">IoT & Sensor Networks</div>
+<div class="out-pre">  <span class="project-link" onclick="openProject('care-link')">care-link/</span>           <span class="dim">— IoT fall detection system (multi-node)</span>
 </div>
 
 <div class="project-category">Power Electronics</div>
@@ -491,7 +493,7 @@ const COMMANDS = {
 
   'cat projects/all': () => [
     'freertos', 'rtos-fault', 'gpio-analysis', 'img-stab',
-    'care-link', 'attention-hw', 'ooo-processor',
+    'care-link', 'attention-hw', 'cache-sim', 'branch-predictor', 'ooo-processor',
     'matrix-reloaded', 'xinu', 'mppt'
   ].map(name => COMMANDS[`cat projects/${name}`]()).join('') +
     `<div class="dim" style="margin-top:16px; margin-bottom:8px;">Tip: To close all projects at once, type <span class="cyan">clear</span> or press <span class="cyan">Ctrl+L</span>.</div>`,
@@ -519,10 +521,9 @@ const COMMANDS = {
     </li>
   </ul>
   <div class="project-meta">
-    <div>Stack: <span>C · FreeRTOS · ARM Cortex-M0 · UART · GPIO EXTI</span></div>
-    <div>MCU: <span>STM32F091RC</span></div>
-    <div>Utilization: <span>0.494 (RM) · 1.20 (overload test)</span></div>
-    <div>GitHub: <span><a href="https://github.com/abhay202/Real_System_Project" target="_blank" rel="noopener" class="cyan">github.com/abhay202/FreeRTOS-Scheduling</a></span></div>
+    <div>Stack: <span>C · FreeRTOS </span></div>
+    <div>Hardware: <span>STM32F091RC · SSD1306 OLED I2C display </span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Real_System_Project" target="_blank" rel="noopener" class="cyan" style="display: inline-flex; align-items: center; gap: 4px; vertical-align: middle;" title="GitHub Repository"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align: middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></span></div>
   </div>
 </div>`,
 
@@ -547,10 +548,9 @@ const COMMANDS = {
     </li>
   </ul>
   <div class="project-meta">
-    <div>Stack: <span>C · RTOS · KL25Z · ST7789 LCD · Buck Converter</span></div>
-    <div>MCU: <span>ARM Cortex-M0+ (KL25Z)</span></div>
-    <div>Watchdog: <span>1 kHz · 41.667 µs fault detection</span></div>
-    <div>GitHub: <span><a href="https://github.com/abhay202/RTOS-Fault-Management" target="_blank" rel="noopener" class="cyan">github.com/abhay202/RTOS-Fault-Management</a></span></div>
+    <div>Stack: <span>C · freeRTOS · Makefile </span></div>
+    <div>Hardware: <span>ARM Cortex-M0+ (KL25Z) . ST7789 LCD screen . Analog Discovery 3 </span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/RTOS-Fault-Management" target="_blank" rel="noopener" class="cyan" style="display: inline-flex; align-items: center; gap: 4px; vertical-align: middle;" title="GitHub Repository"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align: middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></span></div>
   </div>
 </div>`,
 
@@ -575,10 +575,9 @@ const COMMANDS = {
     </li>
   </ul>
   <div class="project-meta">
-    <div>Stack: <span>C · Linux · RPi 4B · GPIO · Kernel Interrupts</span></div>
-    <div>Best Latency: <span>98.23 ns (polling)</span></div>
-    <div>CPU Savings: <span>100% → &lt;8% (event-driven)</span></div>
-    <div>GitHub: <span><a href="https://github.com/abhay202/GPIO-Response-Analysis" target="_blank" rel="noopener" class="cyan">github.com/abhay202/GPIO-Response-Analysis</a></span></div>
+    <div>Stack: <span>C · Makefile </span></div>
+    <div>Hardware: <span>RPi 4 Model B</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Input-Output-Response-Time" target="_blank" rel="noopener" class="cyan" style="display: inline-flex; align-items: center; gap: 4px; vertical-align: middle;" title="GitHub Repository"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align: middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></span></div>
   </div>
 </div>`,
 
@@ -602,10 +601,9 @@ const COMMANDS = {
     </li>
   </ul>
   <div class="project-meta">
-    <div>Stack: <span>C · ARM NEON SIMD · RPi 4B · Cortex-A72</span></div>
-    <div>Speedup: <span>21 ms → 1.9 ms/frame (11× faster)</span></div>
-    <div>Optimization: <span>Scalar + NEON Vectorization</span></div>
-    <div>GitHub: <span><a href="https://github.com/abhay202/ARM-NEON-Image-Stabilization" target="_blank" rel="noopener" class="cyan">github.com/abhay202/ARM-NEON-Image-Stabilization</a></span></div>
+    <div>Stack: <span>C  · Python</span></div>
+    <div> Hardware: <span> Rpi MOdel 4B</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Image_Stabilizer" target="_blank" rel="noopener" class="cyan" style="display: inline-flex; align-items: center; gap: 4px; vertical-align: middle;" title="GitHub Repository"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align: middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></span></div>
   </div>
 </div>`,
 
@@ -629,75 +627,114 @@ const COMMANDS = {
       demonstrating a complete edge-to-cloud IoT workflow across embedded, single-board, and
       laptop computing tiers.
     </li>
-  </ul>
+  </ul> 
   <div class="project-meta">
-    <div>Stack: <span>Python · MQTT · ESP8266 · Arduino · RPi 4B</span></div>
-    <div>Sensors: <span>MAX3010x (100 Hz) · Sound (150 Hz) · IMU</span></div>
-    <div>Pipeline: <span>MQTT → CSV → ML Inference</span></div>
-    <div>GitHub: <span><a href="https://github.com/abhay202/Care-Link-IoT" target="_blank" rel="noopener" class="cyan">github.com/abhay202/Care-Link-IoT</a></span></div>
-  </div>
-</div>`,
-
-  'cat projects/attention-hw': () => `
-<div class="project-card">
-  <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
-  <div class="project-title">Self-Attention Hardware Accelerator</div>
-  <ul class="project-bullets">
-    <li>
-      Designed and implemented a Transformer-based hardware module in SystemVerilog to compute
-      scaled dot-product attention, including query, key, value, score, and self-attention matrices,
-      leveraging SRAM for input, intermediate, and output storage.
-    </li>
-    <li>
-      Developed an efficient matrix multiplication engine for QK&#x1D40; and S×V computations with
-      optimized memory mapping and control signals for seamless SRAM interfacing, adhering to
-      timing constraints.
-    </li>
-    <li>
-      Verified and synthesized using industry-standard tools — simulation log validation and
-      synthesis compliance prevented latches and combinational feedback, achieving 9,215.5 µm²
-      area, 6.8 ns clock period, and 2850 cycles.
-    </li>
-  </ul>
-  <div class="project-meta">
-    <div>Stack: <span>SystemVerilog · SRAM · Synthesis Tools</span></div>
-    <div>Area: <span>9,215.5 µm²</span></div>
-    <div>Clock: <span>6.8 ns · 2850 cycles</span></div>
-    <div>GitHub: <span><a href="https://github.com/abhay202/Self-Attention-Accelerator" target="_blank" rel="noopener" class="cyan">github.com/abhay202/Self-Attention-Accelerator</a></span></div>
+    <div>Stack: <span>Python · C/C++</span></div>
+    <div>Hardware: <span>ESP8266 · Arduino · RPi 4B · IMU · MAX3010x pulse sensor · Sound sensor</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Care-Link-IoT" target="_blank" rel="noopener" class="cyan" style="display: inline-flex; align-items: center; gap: 4px; vertical-align: middle;" title="GitHub Repository"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align: middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></span></div>
   </div>
 </div>`,
 
   'cat projects/ooo-processor': () => `
 <div class="project-card">
   <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
-  <div class="project-title">Out-of-Order Superscalar Processor Simulator</div>
+  <div class="project-title">Out-of-Order Superscalar Processor for Dynamic Instruction Scheduling</div>
   <ul class="project-bullets">
     <li>
-      Developed a simulator capable of fetching and issuing N instructions per cycle, incorporating
-      dynamic scheduling with Issue Queue (IQ), Reorder Buffer (ROB), and Rename Map Table (RMT).
+      Designed and implemented a cycle-accurate out-of-order superscalar processor simulator in C++
+      featuring a 9-stage pipeline with configurable superscalar width (up to 7-wide), Reorder Buffer (up to
+      512 entries), and Issue Queue depth for exploring performance - complexity tradeoffs.
     </li>
     <li>
-      Modeled pipeline stages (Fetch, Decode, Rename, Register Read, Execute, Writeback, Retire)
-      with accurate timing tracking for each instruction, and conducted experiments to measure
-      Instructions Per Cycle (IPC) across varying configurations.
+      Engineered dynamic scheduling with ROB-tag-based register renaming, multi-stage wakeup broadcasting
+      (Issue Queue, Dispatch, and Register Read), and oldest-first issue policy to extract maximum
+      instruction-level parallelism from SPEC benchmark traces.
     </li>
     <li>
-      Ensured simulator outputs matched trace files, validating the correctness of the dynamic
-      instruction scheduling mechanism.
+      Implemented precise per-instruction timing across all 9 pipeline stages with stall-aware duration
+      tracking, reverse-order stage execution for single-cycle resource forwarding, and in-order
+      retirement with Rename Map Table cleanup to maintain correct architectural state.
+    </li>
+    <li>
+      Identified and resolved a critical pipeline deadlock where premature ROB ready-flag invalidation
+      on retirement starved late-arriving consumers, implementing a deferred-reset scheme that preserves
+      producer readiness until ROB entry reallocation.
+    </li>
+    <li>
+      Validated simulator correctness across 8 benchmark configurations with reference outputs,
+      demonstrating IPC scaling from 0.97 for single-issue and 16-entry ROB to 6.24 for 7-wide and
+      512-entry ROB, resulting in a 6.4 times throughput improvement.
     </li>
   </ul>
   <div class="project-meta">
-    <div>Stack: <span>C++ · Microarchitecture · Dynamic Scheduling</span></div>
-    <div>Features: <span>IQ · ROB · RMT · N-wide fetch/issue</span></div>
-    <div>Validation: <span>Trace-file verified IPC measurements</span></div>
-    <div>GitHub: <span><a href="https://github.com/abhay202/Out-of-Order-Simulator" target="_blank" rel="noopener" class="cyan">github.com/abhay202/Out-of-Order-Simulator</a></span></div>
+    <div>Stack: <span>C++ · Bash</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Nine-Stage-out-of-order-simulator" target="_blank" rel="noopener" class="cyan" style="display: inline-flex; align-items: center; gap: 4px; vertical-align: middle;" title="GitHub Repository"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align: middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></span></div>
+  </div>
+</div>`,
+
+  'cat projects/cache-sim': () => `
+<div class="project-card">
+  <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
+  <div class="project-title">Cache and Stream-Buffer Prefetch Simulator</div>
+  <ul class="project-bullets">
+    <li>
+      Designed and implemented a configurable memory hierarchy simulator in C++ supporting L1-only, L1+L2, and stream-buffer prefetching configurations using real SPEC 2006/2017 benchmark traces.
+    </li>
+    <li>
+      Engineered a stream-buffer prefetch unit with N buffers and M-block capacity, handling all four cache/prefetch interaction scenarios (demand miss, prefetch hit, cache hit, simultaneous hit) with LRU replacement policy.
+    </li>
+    <li>
+      Reduced effective L1 miss rate from 19.2% to 15.5% and L2 miss rate from 30.9% to 12.4% through stream-buffer prefetching, validated against reference outputs across 8 benchmark configurations.
+    </li>
+    <li>
+      Modeled write-back, write-allocate cache semantics with LRU eviction, dirty-block writebacks, and accurate memory traffic accounting across multi-level hierarchies.
+    </li>
+    <li>
+      Tracked and reported 17 performance metrics per simulation run including miss rates, writebacks, demand vs. prefetch reads, and total memory traffic for performance analysis.
+    </li>
+  </ul>
+  <div class="project-meta">
+    <div>Stack: <span>C++ · Bash</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Cache-and-Stream-Buffer-Prefetch-Simulator" target="_blank" rel="noopener" class="cyan" style="display: inline-flex; align-items: center; gap: 4px; vertical-align: middle;" title="GitHub Repository"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align: middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></span></div>
+  </div>
+</div>`,
+
+  'cat projects/branch-predictor': () => `
+<div class="project-card">
+  <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
+  <div class="project-title">Configurable Branch Predictor Simulator</div>
+  <ul class="project-bullets">
+    <li>
+      Designed and implemented a configurable branch predictor simulator in C++ supporting Bimodal,
+      Gshare, and Hybrid prediction schemes, processing instruction traces to evaluate prediction
+      accuracy across different hardware configurations.
+    </li>
+    <li>
+      Engineered a Gshare predictor with XOR-based index hashing that combines N-bit global
+      Branch History Register with PC bits to capture both spatial and temporal branch correlation,
+      reducing destructive aliasing compared to direct-mapped approaches.
+    </li>
+    <li>
+      Built a McFarling-style hybrid tournament predictor with a dynamic chooser table that teaches
+      per-branch which predictor performs better, using selective table updates to prevent pollution
+      of the unchosen predictor's learned patterns.
+    </li>
+    <li>
+      Modeled 2-bit saturating counter mechanics with configurable table sizes of 2^M entries,
+      word-aligned PC indexing, and proper counter hysteresis to filter prediction noise, with full
+      output of final predictor state for validation against reference outputs.
+    </li>
+  </ul>
+  <div class="project-meta">
+    <div>Stack: <span>C++ · Bash</span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Branch_Predictor" target="_blank" rel="noopener" class="cyan" style="display: inline-flex; align-items: center; gap: 4px; vertical-align: middle;" title="GitHub Repository"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align: middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></span></div>
   </div>
 </div>`,
 
   'cat projects/matrix-reloaded': () => `
 <div class="project-card">
   <button class="project-close" onclick="closeBlock(this)" title="Close">✕</button>
-  <div class="project-title">Matrix Reloaded — DSL Compiler</div>
+  <div class="project-title">Matrix Reloaded Compiler</div>
   <ul class="project-bullets">
     <li>
       Designed a domain-specific language compiler using Flex/Bison and LLVM IR to support matrix
@@ -714,9 +751,8 @@ const COMMANDS = {
   </ul>
   <div class="project-meta">
     <div>Stack: <span>C++ · Flex · Bison · LLVM IR · Eigen</span></div>
-    <div>Static Instrs: <span>243 (optimized)</span></div>
     <div>Rank: <span>Top 3 in class</span></div>
-    <div>GitHub: <span><a href="https://github.com/abhay202/Matrix-Reloaded-Compiler" target="_blank" rel="noopener" class="cyan">github.com/abhay202/Matrix-Reloaded-Compiler</a></span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Matrix-Reloaded-Compiler" target="_blank" rel="noopener" class="cyan" style="display: inline-flex; align-items: center; gap: 4px; vertical-align: middle;" title="GitHub Repository"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align: middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></span></div>
   </div>
 </div>`,
 
@@ -742,10 +778,8 @@ const COMMANDS = {
     </li>
   </ul>
   <div class="project-meta">
-    <div>Stack: <span>C · Xinu OS · ARM · Kernel Development</span></div>
-    <div>Features: <span>fork() · Lottery · MLFQ Scheduling</span></div>
-    <div>Testing: <span>15+ process test suites</span></div>
-    <div>GitHub: <span><a href="https://github.com/abhay202/Xinu-Kernel-Extensions" target="_blank" rel="noopener" class="cyan">github.com/abhay202/Xinu-Kernel-Extensions</a></span></div>
+    <div>Stack: <span>C · Xinu OS </span></div>
+    <div>GitHub: <span><a href="https://github.com/abhay202/Xinu-Kernel-Extensions" target="_blank" rel="noopener" class="cyan" style="display: inline-flex; align-items: center; gap: 4px; vertical-align: middle;" title="GitHub Repository"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align: middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></span></div>
   </div>
 </div>`,
 
@@ -771,10 +805,7 @@ const COMMANDS = {
     </li>
   </ul>
   <div class="project-meta">
-    <div>Stack: <span>C · Arduino · MATLAB · Power Electronics</span></div>
-    <div>Power: <span>1.5 kW · 96.5% tracking efficiency</span></div>
-    <div>Converter: <span>20 kHz boost · 190 µH · ≥80 µF</span></div>
-    <div>GitHub: <span><a href="https://github.com/abhay202/PV-MPPT-Converter" target="_blank" rel="noopener" class="cyan">github.com/abhay202/PV-MPPT-Converter</a></span></div>
+    <div>Stack: <span>C · Arduino · MATLAB</span></div>
   </div>
 </div>`,
 
@@ -842,7 +873,7 @@ const COMMANDS = {
       <span class="edu-date">Aug 2024 -  May 2026</span>
     </div>
     <div class="edu-degree">Master of Science, Computer Engineering</div>
-    <div class="edu-gpa">GPA: 3.7 / 4.00</div>
+    <div class="edu-gpa">GPA: 3.65 / 4.00</div>
   </div>
 
   <div class="edu-card">
@@ -1606,6 +1637,7 @@ window.initShooterGame = function (gameId) {
   loop();
 };
 
+
 window.resetShooter = function (gameId) {
   const game = shooterGames[gameId];
   if (game) {
@@ -1613,3 +1645,129 @@ window.resetShooter = function (gameId) {
   }
   initShooterGame(gameId);
 };
+
+/* ═══════════════════════════════════════════════════════════
+   CONTACT FORM — AJAX submit (stay on page)
+   ═══════════════════════════════════════════════════════════ */
+(function initContactForm() {
+  const form     = document.getElementById('contact-form');
+  const btn      = document.getElementById('contact-submit');
+  const label    = document.getElementById('submit-label');
+  const feedback = document.getElementById('contact-feedback');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Validate all fields
+    const nameVal    = form.querySelector('#contact-name').value.trim();
+    const emailVal   = form.querySelector('#contact-email').value.trim();
+    const messageVal = form.querySelector('#contact-message').value.trim();
+
+    feedback.style.display = 'none';
+
+    if (!nameVal || !emailVal || !messageVal) {
+      const missing = [];
+      if (!nameVal)    missing.push('Name');
+      if (!emailVal)   missing.push('Email');
+      if (!messageVal) missing.push('Message');
+
+      feedback.style.display = 'block';
+      feedback.innerHTML = `
+        <div style="
+          display:inline-flex; align-items:center; gap:8px;
+          color:var(--bright-red); font-size:0.84rem;
+          animation: fadeIn 0.3s ease both;
+        ">
+          <span>✕</span> Please fill in: ${missing.join(', ')}
+        </div>`;
+      // Highlight the empty inputs
+      form.querySelectorAll('.form-input').forEach(el => {
+        const isEmpty = el.value.trim() === '';
+        el.style.borderColor = isEmpty ? 'rgba(224,108,117,0.6)' : '';
+        el.style.boxShadow   = isEmpty ? '0 0 0 3px rgba(224,108,117,0.08)' : '';
+      });
+      return;
+    }
+
+    // Clear any prior error highlights
+    form.querySelectorAll('.form-input').forEach(el => {
+      el.style.borderColor = '';
+      el.style.boxShadow   = '';
+    });
+
+    // Loading state
+    btn.disabled = true;
+    label.innerHTML = '<span style="margin-right:6px;">⏳</span> sending...';
+
+    try {
+      const data = new FormData(form);
+      const res  = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        // Success
+        form.style.opacity = '0';
+        form.style.transition = 'opacity 0.4s ease';
+        setTimeout(() => { form.style.display = 'none'; }, 400);
+
+        feedback.style.display = 'block';
+        feedback.innerHTML = `
+          <div style="
+            display:flex; flex-direction:column; align-items:center; gap:14px;
+            animation: fadeIn 0.5s ease both;
+          ">
+            <div style="
+              display:inline-flex; align-items:center; gap:10px;
+              background:rgba(78,201,86,0.08);
+              border:1px solid rgba(78,201,86,0.35);
+              border-radius:6px; padding:14px 24px;
+              font-size:0.88rem; color:var(--bright-green);
+            ">
+              <span style="font-size:1.2rem;">✓</span>
+              Message sent! I'll get back to you soon.
+            </div>
+            <button onclick="
+              document.getElementById('contact-feedback').style.display='none';
+              const f=document.getElementById('contact-form');
+              f.reset();
+              f.style.display='flex';
+              f.style.opacity='0';
+              f.style.transition='opacity 0.4s ease';
+              requestAnimationFrame(()=>{ f.style.opacity='1'; });
+              document.getElementById('submit-label').innerHTML='<span style=\\'margin-right:6px;\\'>✉</span> send message';
+              document.getElementById('contact-submit').disabled=false;
+            " style="
+              font-family:var(--font-mono); font-size:0.78rem;
+              color:var(--fg-dim); background:transparent;
+              border:1px solid var(--bg3); border-radius:4px;
+              padding:6px 16px; cursor:pointer;
+              transition:color 0.2s, border-color 0.2s;
+            "
+            onmouseover="this.style.color='var(--fg)';this.style.borderColor='var(--fg-dim)';"
+            onmouseout="this.style.color='var(--fg-dim)';this.style.borderColor='var(--bg3)';"
+            >↺ send another</button>
+          </div>`;
+      } else {
+        throw new Error('non-ok response');
+      }
+    } catch {
+      // Error state — re-enable
+      btn.disabled = false;
+      label.innerHTML = '<span style="margin-right:6px;">✉</span> send message';
+      feedback.style.display = 'block';
+      feedback.innerHTML = `
+        <div style="
+          display:inline-flex; align-items:center; gap:8px;
+          color:var(--bright-red); font-size:0.84rem;
+          animation: fadeIn 0.4s ease both;
+        ">
+          <span>✕</span> Something went wrong. Try emailing directly:
+          <a href="mailto:apsengar@ncsu.edu" style="color:var(--link);">apsengar@ncsu.edu</a>
+        </div>`;
+    }
+  });
+})();

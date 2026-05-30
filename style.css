@@ -290,7 +290,10 @@ a:hover {
 }
 
 /* Resume download button in nav */
-.resume-nav-item { margin-left: 8px !important; }
+.resume-nav-item {
+    margin-left: 8px !important;
+    align-items: center;
+}
 
 .resume-btn {
     display: flex !important;
@@ -304,19 +307,118 @@ a:hover {
     font-weight: 600;
     font-size: 0.82rem !important;
     letter-spacing: 0.04em;
-    transition: background 0.2s ease, box-shadow 0.2s ease !important;
-    box-shadow: 0 0 8px rgba(78, 201, 86, 0.3);
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease, color 0.2s ease !important;
+    box-shadow: 0 0 10px rgba(78, 201, 86, 0.4);
+    position: relative;
+    overflow: hidden;
 }
 
 .resume-btn:hover {
     background: var(--bright-green) !important;
-    box-shadow: 0 0 16px rgba(78, 201, 86, 0.5) !important;
+    box-shadow: 0 0 24px rgba(78, 201, 86, 0.85) !important;
     color: #000 !important;
+    transform: translateY(-2px) scale(1.025);
 }
 
+/* ── Nav-only resume button enhancements ─────────────── */
+.resume-nav-item .resume-btn {
+    background: linear-gradient(135deg, #4ec956 0%, #3ddb52 50%, #4ec956 100%) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    animation: resumeGlow 2s ease-in-out infinite;
+}
+
+/* Smooth breathing glow */
+@keyframes resumeGlow {
+    0%, 100% {
+        box-shadow:
+            0 0 12px rgba(78, 201, 86, 0.5),
+            0 0 30px rgba(78, 201, 86, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        filter: brightness(1);
+    }
+    50% {
+        box-shadow:
+            0 0 20px rgba(78, 201, 86, 0.85),
+            0 0 50px rgba(78, 201, 86, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        filter: brightness(1.08);
+    }
+}
+
+.resume-nav-item .resume-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow:
+        0 0 28px rgba(78, 201, 86, 0.9),
+        0 0 60px rgba(78, 201, 86, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    filter: brightness(1.12);
+    animation: none;
+}
+
+/* Shine Sweep — nav button only */
+.resume-nav-item .resume-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(to right,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.5) 50%,
+            rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-25deg);
+    pointer-events: none;
+    animation: shineSweep 3s ease-in-out infinite;
+}
+
+@keyframes shineSweep {
+    0%, 100% { left: -75%; }
+    50%      { left: 150%; }
+}
+
+.resume-nav-item .resume-btn:hover::after {
+    animation: shineSweepFast 0.6s ease forwards;
+}
+
+@keyframes shineSweepFast {
+    from { left: -75%; }
+    to   { left: 150%; }
+}
+
+/* Pulsing attention dot — nav button only */
+.resume-nav-item .resume-btn::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+    animation: dotPulse 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes dotPulse {
+    0%, 100% { opacity: 1;   transform: scale(1);   }
+    50%      { opacity: 0.4; transform: scale(0.7); }
+}
+
+
 .resume-icon {
-    font-size: 1rem;
+    display: inline-block;
+    font-size: 1.05rem;
     line-height: 1;
+    transition: transform 0.25s ease;
+}
+
+/* Arrow bounce micro-animation */
+.resume-btn:hover .resume-icon {
+    animation: arrowBounce 0.8s infinite ease-in-out;
+}
+
+@keyframes arrowBounce {
+    0%, 100% { transform: translateY(0);   }
+    50%      { transform: translateY(3px); }
 }
 
 /* ── Title ──────────────────────────────────────────────── */
@@ -1400,3 +1502,90 @@ a:hover {
 .cli-section:focus-within #fake-cursor {
     display: none;
 }
+
+/* ════════════════════════════════════════════════════════════
+   CONTACT FORM
+   ════════════════════════════════════════════════════════════ */
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--bright-yellow);
+    letter-spacing: 0.08em;
+}
+
+
+
+.form-input {
+    font-family: var(--font-mono);
+    font-size: 0.84rem;
+    color: var(--fg);
+    background: var(--bg1);
+    border: 1px solid var(--bg3);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    caret-color: var(--bright-green);
+}
+
+.form-input::placeholder {
+    color: var(--fg-dim);
+    opacity: 0.6;
+}
+
+.form-input:focus {
+    border-color: rgba(78, 201, 86, 0.6);
+    box-shadow: 0 0 0 3px rgba(78, 201, 86, 0.08), 0 0 12px rgba(78, 201, 86, 0.12);
+}
+
+textarea.form-input {
+    min-height: 120px;
+    line-height: 1.6;
+}
+
+.form-submit-btn {
+    font-family: var(--font-mono);
+    font-size: 0.84rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--bg);
+    background: var(--green);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    box-shadow: 0 0 10px rgba(78, 201, 86, 0.3);
+    align-self: flex-end;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-submit-btn:hover:not(:disabled) {
+    background: var(--bright-green);
+    box-shadow: 0 0 20px rgba(78, 201, 86, 0.6);
+    transform: translateY(-1px);
+}
+
+.form-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@media (max-width: 520px) {
+    #contact-form > div:first-of-type {
+        grid-template-columns: 1fr;
+    }
+    .form-submit-btn {
+        align-self: stretch;
+        justify-content: center;
+    }
+}
