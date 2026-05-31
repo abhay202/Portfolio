@@ -472,16 +472,16 @@ const COMMANDS = {
 <div class="project-category">Microarchitecture</div>
 <div class="out-pre">  <span class="project-link" onclick="openProject('cache-sim')">cache-sim/</span>           <span class="dim">— Cache & Stream-Buffer Prefetch Simulator</span>
   <span class="project-link" onclick="openProject('branch-predictor')">branch-predictor/</span>    <span class="dim">— Configurable branch predictor simulator in C++</span>
-  <span class="project-link" onclick="openProject('ooo-processor')">ooo-processor/</span>       <span class="dim">— 9-stage cycle-accurate out-of-order processor simulator</span>
+  <span class="project-link" onclick="openProject('ooo-processor')">ooo-processor/</span>       <span class="dim">— 9-stage out-of-order processor simulator</span>
 </div>
 
 <div class="project-category">Compiler & Operating Systems</div>
-<div class="out-pre">  <span class="project-link" onclick="openProject('matrix-reloaded')">matrix-reloaded/</span>     <span class="dim">— DSL compiler with Flex/Bison & LLVM IR</span>
+<div class="out-pre">  <span class="project-link" onclick="openProject('matrix-reloaded')">matrix-reloaded/</span>     <span class="dim">— Compiler with Flex/Bison & LLVM IR</span>
   <span class="project-link" onclick="openProject('xinu')">xinu/</span>                <span class="dim">— Xinu OS kernel extensions (fork, schedulers)</span>
 </div>
 
 <div class="project-category">IoT & Sensor Networks</div>
-<div class="out-pre">  <span class="project-link" onclick="openProject('care-link')">care-link/</span>           <span class="dim">— IoT fall detection system (multi-node)</span>
+<div class="out-pre">  <span class="project-link" onclick="openProject('care-link')">care-link/</span>           <span class="dim">— IoT fall detection system</span>
 </div>
 
 <div class="project-category">Power Electronics</div>
@@ -750,9 +750,9 @@ const COMMANDS = {
     </li>
   </ul>
   <div class="project-meta">
-    <div>Stack: <span>C++ · Flex · Bison · LLVM IR · Eigen</span></div>
+    <div>Stack: <span>C · Flex · Bison</span></div>
     <div>Rank: <span>Top 3 in class</span></div>
-    <div>GitHub: <span><a href="https://github.com/abhay202/Matrix-Reloaded-Compiler" target="_blank" rel="noopener" class="cyan" style="display: inline-flex; align-items: center; gap: 4px; vertical-align: middle;" title="GitHub Repository"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align: middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></span></div>
+    <div>GitHub: <span><a href="https://github.com/umi001/Matrix_Reloaded" target="_blank" rel="noopener" class="cyan" style="display: inline-flex; align-items: center; gap: 4px; vertical-align: middle;" title="GitHub Repository"><svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align: middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a></span></div>
   </div>
 </div>`,
 
@@ -887,14 +887,14 @@ const COMMANDS = {
 
   <div class="out-h" style="margin-top:14px"> Relevant Coursework</div>
   <div class="chips">
-    <span class="chip">Advanced Computer Architecture</span>
-    <span class="chip">VLSI Design</span>
-    <span class="chip">Digital System Design</span>
-    <span class="chip">Real-Time Embedded Systems</span>
-    <span class="chip">Hardware Security</span>
-    <span class="chip">Compiler Optimization</span>
-    <span class="chip">Operating Systems</span>
-    <span class="chip">Power Electronics</span>
+    <span class="chip">Embedded System Architecture</span>
+    <span class="chip">Operating System Design</span>
+    <span class="chip">Real Time Computer System (freeRTOS)</span>
+    <span class="chip">Advanced Embedded System Design</span>
+    <span class="chip">Compiler Optimization and Scheduling</span>
+    <span class="chip">Internet of Things: Application and Implementation</span>
+    <span class="chip">Digital Circuit Design</span>
+    <span class="chip">Microprocessors and Microcontrollers</span>
   </div>
   <div class="dim" style="margin-top:20px">Run <span class="cyan">ls projects/</span> or click on projects in navigation bar to view projects (click <span class="cyan">view all</span> to see all descriptions).</div>
 </div>`,
@@ -1650,9 +1650,9 @@ window.resetShooter = function (gameId) {
    CONTACT FORM — AJAX submit (stay on page)
    ═══════════════════════════════════════════════════════════ */
 (function initContactForm() {
-  const form     = document.getElementById('contact-form');
-  const btn      = document.getElementById('contact-submit');
-  const label    = document.getElementById('submit-label');
+  const form = document.getElementById('contact-form');
+  const btn = document.getElementById('contact-submit');
+  const label = document.getElementById('submit-label');
   const feedback = document.getElementById('contact-feedback');
   if (!form) return;
 
@@ -1660,16 +1660,16 @@ window.resetShooter = function (gameId) {
     e.preventDefault();
 
     // Validate all fields
-    const nameVal    = form.querySelector('#contact-name').value.trim();
-    const emailVal   = form.querySelector('#contact-email').value.trim();
+    const nameVal = form.querySelector('#contact-name').value.trim();
+    const emailVal = form.querySelector('#contact-email').value.trim();
     const messageVal = form.querySelector('#contact-message').value.trim();
 
     feedback.style.display = 'none';
 
     if (!nameVal || !emailVal || !messageVal) {
       const missing = [];
-      if (!nameVal)    missing.push('Name');
-      if (!emailVal)   missing.push('Email');
+      if (!nameVal) missing.push('Name');
+      if (!emailVal) missing.push('Email');
       if (!messageVal) missing.push('Message');
 
       feedback.style.display = 'block';
@@ -1685,7 +1685,7 @@ window.resetShooter = function (gameId) {
       form.querySelectorAll('.form-input').forEach(el => {
         const isEmpty = el.value.trim() === '';
         el.style.borderColor = isEmpty ? 'rgba(224,108,117,0.6)' : '';
-        el.style.boxShadow   = isEmpty ? '0 0 0 3px rgba(224,108,117,0.08)' : '';
+        el.style.boxShadow = isEmpty ? '0 0 0 3px rgba(224,108,117,0.08)' : '';
       });
       return;
     }
@@ -1693,7 +1693,7 @@ window.resetShooter = function (gameId) {
     // Clear any prior error highlights
     form.querySelectorAll('.form-input').forEach(el => {
       el.style.borderColor = '';
-      el.style.boxShadow   = '';
+      el.style.boxShadow = '';
     });
 
     // Loading state
@@ -1702,7 +1702,7 @@ window.resetShooter = function (gameId) {
 
     try {
       const data = new FormData(form);
-      const res  = await fetch(form.action, {
+      const res = await fetch(form.action, {
         method: 'POST',
         body: data,
         headers: { 'Accept': 'application/json' }
