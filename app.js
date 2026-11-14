@@ -873,7 +873,7 @@ const COMMANDS = {
       <span class="edu-date">Aug 2024 -  May 2026</span>
     </div>
     <div class="edu-degree">Master of Science, Computer Engineering</div>
-    <div class="edu-gpa">GPA: 3.65 / 4.00</div>
+    <div class="edu-gpa">GPA: 3.63 / 4.00</div>
   </div>
 
   <div class="edu-card">
